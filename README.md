@@ -55,15 +55,3 @@ A simple e-commerce platform for buying and selling Pokémon TCG cards. Built wi
 ## Usage 🏪
 - Visit `http://localhost:5000/` (Flask) or `http://localhost:8000/` (Django) to access the app.
 - Sign up, browse available cards, and manage your collection!
-
-## Contributing 🤝
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Open a Pull Request.
-
-## License 📜
-This project is licensed under the MIT License.
-
-

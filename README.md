@@ -66,6 +66,4 @@ A simple e-commerce platform for buying and selling Pokémon TCG cards. Built wi
 ## License 📜
 This project is licensed under the MIT License.
 
----
-Gotta catch 'em all! 🚀
 

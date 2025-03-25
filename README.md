@@ -1,8 +1,9 @@
 # Pokémon TCG E-commerce 🃏⚡
 
-A simple e-commerce platform for buying and selling Pokémon TCG cards. Built with **Python**, **MySQL**, and **PokeAPI** for real-time card data.
+A simple e-commerce platform for buying and selling Pokémon TCG cards. Built with **Vue.js**, **MySQL**, and **PokeAPI** for real-time card data.
 
-## Features 
+## Features ✨
+
 - 📦 **Buy & Sell Cards** – Users can browse, purchase, and list Pokémon cards for sale.
 - 🔍 **Search & Filter** – Find cards by name, type, rarity, or set.
 - 🖼 **Real-time Card Data** – Uses **PokeAPI** to fetch up-to-date Pokémon TCG details.
@@ -10,48 +11,44 @@ A simple e-commerce platform for buying and selling Pokémon TCG cards. Built wi
 - 📊 **Inventory Management** – Users can track their listed cards and sales.
 
 ## Technologies Used 🛠️
-- **Backend:** Python (Flask/Django)
+
+- **Frontend:** Vue.js, HTML, CSS
+- **Backend:** TBD (Node.js)
 - **Database:** MySQL
 - **API:** PokeAPI (for card details)
-- **Frontend:** HTML, CSS, JavaScript (React/Vue)
-- **Authentication:** JWT-based user authentication
-- **Payment Integration:** Stripe/PayPal
 
 ## Installation 🚀
+
 ### Prerequisites:
-- Python 3.x
+
 - MySQL
-- Node.js (if using a frontend framework)
+- Node.js (for Vue.js frontend and backend, if applicable)
 
 ### Steps:
+
 1. Clone the repository:
    ```sh
    git clone https://github.com/yourusername/pokemon-tcg-ecommerce.git
    cd pokemon-tcg-ecommerce
    ```
-2. Create a virtual environment and activate it:
+
+## Setting Up the Frontend 🎨
+
+1. Navigate to the frontend directory:
    ```sh
-   python -m venv venv
-   source venv/bin/activate  # On Windows use: venv\Scripts\activate
+   cd frontend
    ```
-3. Install dependencies:
+2. Install Vue.js dependencies:
    ```sh
-   pip install -r requirements.txt
+   npm install
    ```
-4. Set up the database:
+3. Start the Vue.js development server:
    ```sh
-   mysql -u root -p -e "CREATE DATABASE pokemon_tcg;"
-   ```
-5. Run migrations (if using Django):
-   ```sh
-   python manage.py migrate
-   ```
-6. Start the development server:
-   ```sh
-   python app.py  # For Flask
-   python manage.py runserver  # For Django
+   npm run dev
    ```
 
 ## Usage 🏪
-- Visit `http://localhost:5000/` (Flask) or `http://localhost:8000/` (Django) to access the app.
+
+- Visit `http://localhost:5173/` (Vue.js) to access the app.
 - Sign up, browse available cards, and manage your collection!
+

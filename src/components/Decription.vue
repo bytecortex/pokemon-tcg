@@ -3,10 +3,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
       <div class="text-center">
         <h1 class="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
-          Become a real Pokémon trainer
+          {{ title }}
         </h1>
         <p class="my-4 text-xl text-white">
-          Find the Pokémon Card that you want!
+          {{ description }}
         </p>
       </div>
     </div>
@@ -14,5 +14,8 @@
 </template>
  
 <script setup>
- 
+defineProps({
+  title: String,
+  description: String
+});
 </script>

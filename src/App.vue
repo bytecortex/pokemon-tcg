@@ -1,7 +1,10 @@
 <template>
   <section>
     <Navbar/>
-    <Decription/>
+    <Decription 
+      title="Become a real Pokémon trainer"
+      description="Find the Pokémon Card that you want!"
+      />
   </section>
 </template>
 

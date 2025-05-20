@@ -18,6 +18,8 @@ function toggleDarkMode() {
     mode = 'light';
   }
 }
+
+//todo: 
 </script>
 
 <template>
@@ -61,7 +63,7 @@ function toggleDarkMode() {
     </div>
   </header>
 
-  <div class="border-t border-b border-blue-500 flex items-center space-x-4
+  <div class="border-t border-b border-blue-500 flex justify-center space-x-25
     h-10 px-6 bg-white dark:bg-black text-gray-800 dark:text-gray-300"
   >
     <Button class="h-full flex items-center hover:text-primary transition font-semibold" variant="ghost">Home</Button>

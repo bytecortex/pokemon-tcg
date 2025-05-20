@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 
+let type = "Fire";
+
 interface CardImage {
   small: string
   large?: string
@@ -33,7 +35,7 @@ function shuffleArray<T>(array: T[]): T[] {
 const fetchCards = async () => {
   loading.value = true
   try {
-    const response = await fetch(`https://api.pokemontcg.io/v2/cards?pageSize=30`, {
+    const response = await fetch("https://api.pokemontcg.io/v2/cards?q=types:" + type + "&pageSize=30", {
       headers: { }
     })
     const data = await response.json()

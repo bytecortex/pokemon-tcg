@@ -4,6 +4,7 @@ import { Sun, Moon, ShoppingCart, Search} from "lucide-vue-next";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Button from "./ui/button/Button.vue";
 import Input from "./ui/input/Input.vue";
+import router from "@/routes";
 
 const darkMode = ref(false);
 let mode = 'light';
@@ -19,7 +20,27 @@ function toggleDarkMode() {
   }
 }
 
-//todo: 
+type button = 'Cards' | 'Events' | 'Contact' | 'Home'
+
+function handleClick(origin: button) {
+  switch (origin) {
+    case 'Cards':
+      router.push('/cards');
+      break;
+    case 'Events':
+      router.push('/events');
+      break;
+    case 'Contact':
+      router.push('/contact');
+      break;
+    case 'Home':
+      router.push('/');
+      break;
+    default:
+      router.push('/');
+  }
+}
+
 </script>
 
 <template>
@@ -64,12 +85,12 @@ function toggleDarkMode() {
   </header>
 
   <div class="border-t border-b border-blue-500 flex justify-center space-x-25
-    h-10 px-6 bg-white dark:bg-black text-gray-800 dark:text-gray-300"
+    h-10 py-0.75 bg-white dark:bg-black text-gray-800 dark:text-gray-300"
   >
-    <Button class="h-full flex items-center hover:text-primary transition font-semibold" variant="ghost">Home</Button>
-    <Button class="h-full flex items-center hover:text-primary transition font-semibold" variant="ghost">Cards</Button>
-    <Button class="h-full flex items-center hover:text-primary transition font-semibold" variant="ghost">Contact</Button>
-    <Button class="h-full flex items-center hover:text-primary transition font-semibold" variant="ghost">Events</Button>
+    <Button @click="handleClick('Home')" class="h-8 flex items-center hover:text-primary transition font-semibold bg-blue-500" variant="ghost">Home</Button>
+    <Button @click="handleClick('Cards')" class="h-8 flex items-center hover:text-primary transition font-semibold bg-blue-500" variant="ghost">Cards</Button>
+    <Button @click="handleClick('Contact')" class="h-8 flex items-center hover:text-primary transition font-semibold bg-blue-500" variant="ghost">Contact</Button>
+    <Button @click="handleClick('Events')" class="h-8 flex items-center hover:text-primary transition font-semibold bg-blue-500" variant="ghost">Events</Button>
   </div>
 </template>
 

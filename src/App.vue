@@ -1,7 +1,8 @@
-<script setup lang='ts'>
-import Home from '@/pages/Home.vue';
-</script>
-
 <template>
-  <Home/>
+  <div>
+    <router-view />
+  </div>
 </template>
+
+<script setup lang="ts">
+</script>

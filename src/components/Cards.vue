@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 
-let type = "Fire";
+// let type = "Fairy";
 
 interface CardImage {
   small: string
@@ -35,7 +35,8 @@ function shuffleArray<T>(array: T[]): T[] {
 const fetchCards = async () => {
   loading.value = true
   try {
-    const response = await fetch("https://api.pokemontcg.io/v2/cards?q=types:" + type + "&pageSize=30", {
+    // const response = await fetch("https://api.pokemontcg.io/v2/cards?q=types:" + type + "&pageSize=30", {
+    const response = await fetch("https://api.pokemontcg.io/v2/cards?pageSize=30", {
       headers: { }
     })
     const data = await response.json()
@@ -57,8 +58,16 @@ onMounted(fetchCards)
 
 <template>
   <div class="max-w-6xl mx-auto p-3">
-    <div v-if="loading" class="text-center text-gray-500">Carregando...</div>
-    <div v-else-if="cards.length === 0" class="text-center text-gray-700">Nenhuma carta encontrada.</div>
+
+    <div v-if="loading" class="flex pt-15 justify-center">
+      <img src="/poke.png" class="h-15 animate-spin">
+    </div>
+
+    <div v-else-if="cards.length === 0" class="text-center pt-15 text-gray-700 text-xl"> 
+      <label>
+        Ops... O Pokémon escapou!
+      </label>
+    </div>
 
     <div v-else class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
       <img

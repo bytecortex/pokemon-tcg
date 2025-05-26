@@ -57,7 +57,7 @@ onMounted(fetchCards)
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto p-3">
+  <div class="pt-8 max-w-6xl mx-auto p-3">
 
     <div v-if="loading" class="flex pt-15 justify-center">
       <img src="/poke.png" class="h-15 animate-spin">

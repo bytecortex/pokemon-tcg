@@ -75,7 +75,7 @@ onMounted(fetchCards)
         :key="card.id"
         :src="card.images.small"
         :alt="card.name"
-        class="w-full h-auto object-contain rounded-md"
+        class="cursor-pointer w-full h-auto object-contain rounded-md"
       />
     </div>
   </div>

@@ -1,57 +1,79 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { Sun, Moon, ShoppingCart, Search} from "lucide-vue-next"; 
+import router from "@/routes"
+import { useRoute } from "vue-router"
+import Input from "./ui/input/Input.vue"
+import Button from "./ui/button/Button.vue"
+import { ref, watch, onMounted } from "vue"
+import { Sun, Moon, ShoppingCart, Search} from "lucide-vue-next"
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import Button from "./ui/button/Button.vue";
-import Input from "./ui/input/Input.vue";
-import router from "@/routes";
 
-const darkMode = ref(false);
-let mode = 'light';
+// Lógica para dark mode
+const darkMode = ref(false)
 
 function toggleDarkMode() {
-  darkMode.value = !darkMode.value;
-  if (darkMode.value) {
-    document.documentElement.classList.add("dark");
-    mode = 'dark';
-  } else {
-    document.documentElement.classList.remove("dark");
-    mode = 'light';
-  }
+  darkMode.value = !darkMode.value
 }
 
+onMounted(() => {
+  const savedMode = localStorage.getItem('darkMode')
+  if (savedMode === 'true' || savedMode === 'false') {
+    darkMode.value = savedMode === 'true'
+  } else {
+    darkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+})
+
+watch(darkMode, (newVal) => {
+  localStorage.setItem('darkMode', String(newVal))
+  if (newVal) {
+    document.documentElement.classList.add("dark")
+  } else {
+    document.documentElement.classList.remove("dark")
+  }
+})
+
+// Indexamento dos botões
 type button = 'Cards' | 'Events' | 'Contact' | 'Home'
 
 function handleClick(origin: button) {
   switch (origin) {
     case 'Cards':
-      router.push('/cards');
-      break;
+      router.push('/cards')
+      break
     case 'Events':
-      router.push('/events');
-      break;
+      router.push('/events')
+      break
     case 'Contact':
-      router.push('/contact');
+      router.push('/contact')
       break;
     case 'Home':
-      router.push('/');
-      break;
+      router.push('/')
+      break
     default:
-      router.push('/');
+      router.push('/')
+  }
+} 
+
+const route = useRoute()
+
+function buttonClass(path: string) {
+  if (route.path === path) {
+    return [
+      'h-8 flex items-center transition font-semibold cursor-pointer text-primary bg-blue-500'
+    ];
   }
 }
-
 </script>
 
 <template>
   <header class="flex items-center justify-between px-6 py-4 bg-white dark:bg-black shadow-md">
     <!-- Logo -->
     <div class="w-30 text-2xl font-bold text-primary cursor-pointer select-none">
-      <div v-if="mode !== 'dark'">
-        <img src="/poqg-white-logo.png" />
+      <div v-if="!darkMode">
+        <img src="/poqg-white-logo.png" @click="handleClick('Home')"/>
       </div>
       <div v-else>
-        <img src="/poqg-black-logo.png" />
+        <img src="/poqg-black-logo.png" @click="handleClick('Home')"/>
       </div>
     </div>
 
@@ -87,10 +109,36 @@ function handleClick(origin: button) {
   <div class="border-t border-b border-blue-500 flex justify-center space-x-25
     h-10 py-0.75 bg-white dark:bg-black text-gray-800 dark:text-gray-300"
   >
-    <Button @click="handleClick('Home')" class="h-8 flex items-center hover:text-primary transition font-semibold bg-blue-500" variant="ghost">Home</Button>
-    <Button @click="handleClick('Cards')" class="h-8 flex items-center hover:text-primary transition font-semibold bg-blue-500" variant="ghost">Cards</Button>
-    <Button @click="handleClick('Contact')" class="h-8 flex items-center hover:text-primary transition font-semibold bg-blue-500" variant="ghost">Contact</Button>
-    <Button @click="handleClick('Events')" class="h-8 flex items-center hover:text-primary transition font-semibold bg-blue-500" variant="ghost">Events</Button>
+    <Button 
+      @click="handleClick('Home')" 
+      :class="buttonClass('/')"
+      class="h-8 flex items-center hover:text-primary transition font-semibold cursor-pointer" 
+      variant="ghost"
+    >
+      Home
+    </Button>
+    <Button 
+      @click="handleClick('Cards')" 
+      :class="buttonClass('/cards')"
+      class="h-8 flex items-center hover:text-primary transition font-semibold cursor-pointer" 
+      variant="ghost"
+    >
+      Cards
+    </Button>
+    <Button 
+      @click="handleClick('Contact')" 
+      class="h-8 flex items-center hover:text-primary transition font-semibold cursor-pointer" 
+      variant="ghost"
+    >
+      Contact
+    </Button>
+    <Button 
+      @click="handleClick('Events')"
+      class="h-8 flex items-center hover:text-primary transition font-semibold cursor-pointer" 
+      variant="ghost"
+    >
+      Events
+    </Button>
   </div>
 </template>
 

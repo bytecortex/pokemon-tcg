@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import router from "@/routes"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
 import { useRoute } from "vue-router"
-import Input from "./ui/input/Input.vue"
-import Button from "./ui/button/Button.vue"
 import { ref, watch, onMounted } from "vue"
+import LoginDialog from "@/components/LoginDialog.vue"
 import { Sun, Moon, ShoppingCart, Search} from "lucide-vue-next"
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 // Lógica para dark mode
 const darkMode = ref(false)
@@ -63,6 +63,10 @@ function buttonClass(path: string) {
     ];
   }
 }
+
+function openDialogLogin() {
+
+}
 </script>
 
 <template>
@@ -99,10 +103,7 @@ function buttonClass(path: string) {
       </button>
 
       <!-- Avatar -->
-      <Avatar>
-        <AvatarImage src="https://github.com/unovue.png" alt="@unovue" />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
+      <LoginDialog/>
     </div>
   </header>
 

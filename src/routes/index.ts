@@ -3,6 +3,7 @@ import Home from '@/pages/HomePage.vue'
 import CardsPage from '@/pages/CardsPage.vue'
 import EventsPage from '@/pages/EventsPage.vue'
 import CartPage from '@/pages/CartPage.vue'
+import SearchPage from '@/pages/SearchPage.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: CartPage
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: SearchPage
   }
 ]
 

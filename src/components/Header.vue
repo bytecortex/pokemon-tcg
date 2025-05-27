@@ -66,6 +66,14 @@ function buttonClass(path: string) {
 }
 
 // function openDialogLogin() {}
+const searchQuery = ref('');
+
+function performSearch() {
+  const cleanedQuery = searchQuery.value.trim().replace(/\s+/g, ' ');
+  if (cleanedQuery !== '') {
+    router.push({ path: '/search', query: { q: cleanedQuery } });
+  }
+}
 </script>
 
 <template>
@@ -83,12 +91,10 @@ function buttonClass(path: string) {
         <img src="/poqg-black-logo.png" @click="handleClick('Home')" />
       </div>
     </div>
-
+    <!-- Pesquisa -->
     <div class="relative w-full max-w-sm items-center">
-      <Input id="search" type="text" placeholder="Search..." class="pl-10" />
-      <span
-        class="absolute start-0 inset-y-0 flex items-center justify-center px-2"
-      >
+      <Input id="search" type="text" placeholder="Search..." class="pl-10" v-model="searchQuery" @keyup.enter="performSearch"/>
+      <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
         <Search class="size-4.5 text-muted-foreground" />
       </span>
     </div>

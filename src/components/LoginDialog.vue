@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "./ui/input";
 import { X } from "lucide-vue-next";
+import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 </script>
 
@@ -41,12 +42,12 @@ import { Button } from "./ui/button";
           <span class="sr-only">Close</span>
         </DialogClose>
 
-        <DialogHeader>
+        <DialogHeader class="flex items-center">
           <DialogTitle class="text-xl font-semibold">Sign in</DialogTitle>
         </DialogHeader>
 
         <div class="flex gap-4">
-          <form id="dialogForm" @submit="" class="flex-1">
+          <form id="dialogForm" @submit="" class="flex-1 flex flex-col gap-4">
             <FormField v-slot="{ componentField }" name="username">
               <FormItem>
                 <FormLabel>Email</FormLabel>
@@ -74,10 +75,12 @@ import { Button } from "./ui/button";
               </FormItem>
             </FormField>
 
-            <DialogFooter class="pt-6">
-              <Button type="submit" form="dialogForm" class="cursor-pointer">
-                Log in
-              </Button>
+            <DialogFooter class="pt-2">
+              <div class="flex justify-start w-full">
+                <Button type="submit" form="dialogForm" class="cursor-pointer">
+                  Log in
+                </Button>
+              </div>
             </DialogFooter>
           </form>
           <img

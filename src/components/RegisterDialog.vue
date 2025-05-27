@@ -41,15 +41,33 @@ import { Button } from "./ui/button";
           <span class="sr-only">Close</span>
         </DialogClose>
 
-        <DialogHeader>
-          <DialogTitle class="text-xl font-semibold">Sign in</DialogTitle>
+        <DialogHeader class="flex items-center">
+          <DialogTitle class="text-xl font-semibold">Sign up</DialogTitle>
         </DialogHeader>
 
         <div class="flex gap-4">
-          <form id="dialogForm" @submit="" class="flex-1">
+          <img
+            src="/squirtle-full-register.png"
+            alt="Side"
+            class="w-[200px] h-[200px] self-end scale-x-[-1]"
+          />
+          <form id="dialogForm" @submit="" class="flex-1 flex flex-col gap-4">
             <FormField v-slot="{ componentField }" name="username">
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel class="flex justify-end">Name</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="Ash Ketchum"
+                    v-bind="componentField"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            </FormField>
+            <FormField v-slot="{ componentField }" name="email">
+              <FormItem>
+                <FormLabel class="flex justify-end">Email</FormLabel>
                 <FormControl>
                   <Input
                     type="text"
@@ -61,8 +79,8 @@ import { Button } from "./ui/button";
               </FormItem>
             </FormField>
             <FormField v-slot="{ componentField }" name="password">
-              <FormItem class="pt-2">
-                <FormLabel>Password</FormLabel>
+              <FormItem>
+                <FormLabel class="flex justify-end">Password</FormLabel>
                 <FormControl>
                   <Input
                     type="text"
@@ -74,17 +92,12 @@ import { Button } from "./ui/button";
               </FormItem>
             </FormField>
 
-            <DialogFooter class="pt-6">
+            <DialogFooter class="pt-2">
               <Button type="submit" form="dialogForm" class="cursor-pointer">
-                Log in
+                Register
               </Button>
             </DialogFooter>
           </form>
-          <img
-            src="/pikachu-full-login.png"
-            alt="Side"
-            class="w-[200px] h-[200px]"
-          />
         </div>
       </DialogContent>
     </Dialog>

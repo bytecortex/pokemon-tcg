@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { useRoute } from "vue-router";
 import { ref, watch, onMounted } from "vue";
 import LoginDialog from "@/components/LoginDialog.vue";
+import RegisterDialog from "@/components/RegisterDialog.vue";
 import { Sun, Moon, ShoppingCart, Search } from "lucide-vue-next";
 
 // Lógica para dark mode
@@ -64,7 +65,7 @@ function buttonClass(path: string) {
   }
 }
 
-function openDialogLogin() {}
+// function openDialogLogin() {}
 </script>
 
 <template>
@@ -116,7 +117,8 @@ function openDialogLogin() {}
       </button>
 
       <!-- Avatar -->
-      <LoginDialog />
+      <RegisterDialog/>
+      <LoginDialog/>
     </div>
   </header>
 

@@ -20,23 +20,61 @@ import {
 import { Input } from "./ui/input";
 import { X } from "lucide-vue-next";
 import { Button } from "./ui/button";
+import axios from 'axios';
+import { ref } from 'vue';
+import { useUserStore } from '@/stores/userStore';
+
+
+const name = ref('');
+const email = ref('');
+const password = ref('');
+const loading = ref(false);
+const userStore = useUserStore();
+
+async function handleRegister() {
+  loading.value = true;
+  try {
+    const response = await axios.post('http://localhost:8000/register', {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+    });
+
+    alert(response.data.message);
+    // Você pode aqui resetar os campos ou fechar o modal
+
+    name.value = '';
+    email.value = '';
+    password.value = '';
+
+  } catch (error: any) {
+    if (error.response) {
+      alert(error.response.data.detail);
+    } else {
+      alert('An error occurred');
+    }
+  } finally {
+    loading.value = false;
+  }
+}
+
 </script>
 
 <template>
   <Form>
     <Dialog>
-      <DialogTrigger>
-        <Avatar class="cursor-pointer" @click="">
-          <AvatarImage src="https://github.com/unovue.png" alt="@unovue" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-      </DialogTrigger>
+      <div v-if="!userStore.user">
+        <DialogTrigger>
+          <Avatar class="cursor-pointer" @click="">
+            <AvatarImage src="https://github.com/unovue.png" alt="@unovue" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </DialogTrigger>
+      </div>
 
       <DialogContent class="sm:max-w-[600px]">
-        <DialogClose
-          as-child
-          class="cursor-pointer ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
-        >
+        <DialogClose as-child
+          class="cursor-pointer ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
           <X />
           <span class="sr-only">Close</span>
         </DialogClose>
@@ -46,58 +84,45 @@ import { Button } from "./ui/button";
         </DialogHeader>
 
         <div class="flex gap-4">
-          <img
-            src="/squirtle-full-register.png"
-            alt="Side"
-            class="w-[200px] h-[200px] self-end scale-x-[-1]"
-          />
           <form id="dialogForm" @submit="" class="flex-1 flex flex-col gap-4">
             <FormField v-slot="{ componentField }" name="username">
               <FormItem>
-                <FormLabel class="flex justify-end">Name</FormLabel>
+                <FormLabel class="flex">Name</FormLabel>
                 <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="Ash Ketchum"
-                    v-bind="componentField"
-                  />
+                  <Input type="text" placeholder="Ash Ketchum" v-model="name" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             </FormField>
             <FormField v-slot="{ componentField }" name="email">
               <FormItem>
-                <FormLabel class="flex justify-end">Email</FormLabel>
+                <FormLabel class="flex">Email</FormLabel>
                 <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="example@email.com"
-                    v-bind="componentField"
-                  />
+                  <Input type="text" placeholder="example@email.com" v-model="email" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             </FormField>
             <FormField v-slot="{ componentField }" name="password">
               <FormItem>
-                <FormLabel class="flex justify-end">Password</FormLabel>
+                <FormLabel class="flex">Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="••••••••"
-                    v-bind="componentField"
-                  />
+                  <Input type="password" placeholder="••••••••" v-model="password" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             </FormField>
 
             <DialogFooter class="pt-2">
-              <Button type="submit" form="dialogForm" class="cursor-pointer">
-                Register
-              </Button>
+              <div class="w-full flex justify-start">
+                <Button type="button" @click="handleRegister" :disabled="loading" class="cursor-pointer">
+                  {{ loading ? 'Registering...' : 'Register' }}
+                </Button>
+
+              </div>
             </DialogFooter>
           </form>
+          <img src="/squirtle-full-register.png" alt="Side" class="w-[200px] h-[200px] self-end" />
         </div>
       </DialogContent>
     </Dialog>

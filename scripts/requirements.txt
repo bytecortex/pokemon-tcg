@@ -1,7 +1,7 @@
 fastapi
 uvicorn
 python-dotenv
-psycopg2-binary
 passlib[bcrypt]
 pydantic
 email-validator
+mysql-connector-python

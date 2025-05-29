@@ -4,6 +4,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useRoute } from "vue-router";
 import { ref, watch, onMounted } from "vue";
+import { useUserStore } from "@/stores/userStore";
 import LoginDialog from "@/components/LoginDialog.vue";
 import RegisterDialog from "@/components/RegisterDialog.vue";
 import { Sun, Moon, ShoppingCart, Search } from "lucide-vue-next";
@@ -60,47 +61,55 @@ const route = useRoute();
 function buttonClass(path: string) {
   if (route.path === path) {
     return [
-      "h-8 flex items-center transition font-semibold cursor-pointer text-primary bg-blue-500",
+      "h-8 flex rounded-xl items-center transition font-semibold cursor-pointer text-primary text-white bg-blue-600",
     ];
   }
 }
 
-// function openDialogLogin() {}
-const searchQuery = ref('');
+const searchQuery = ref("");
 
 function performSearch() {
-  const cleanedQuery = searchQuery.value.trim().replace(/\s+/g, ' ');
-  if (cleanedQuery !== '') {
-    router.push({ path: '/search', query: { q: cleanedQuery } });
+  const cleanedQuery = searchQuery.value.trim().replace(/\s+/g, " ");
+  if (cleanedQuery !== "") {
+    router.push({ path: "/cards", query: { q: cleanedQuery } });
   }
 }
+
+const userStore = useUserStore();
 </script>
 
 <template>
   <header
-    class="flex items-center justify-between px-6 py-4 bg-white dark:bg-black shadow-md"
+    class="grid grid-cols-3 items-center px-6 py-4 gap-x-4 bg-white dark:bg-black"
   >
     <!-- Logo -->
-    <div
-      class="w-30 text-2xl font-bold text-primary cursor-pointer select-none"
-    >
-      <div v-if="!darkMode">
-        <img src="/poqg-white-logo.png" @click="handleClick('Home')" />
-      </div>
-      <div v-else>
-        <img src="/poqg-black-logo.png" @click="handleClick('Home')" />
-      </div>
+    <div class="text-2xl font-bold text-primary cursor-pointer select-none">
+      <img
+        :src="darkMode ? '/poqg-black-logo.png' : '/poqg-white-logo.png'"
+        @click="handleClick('Home')"
+        class="w-30"
+      />
     </div>
-    <!-- Pesquisa -->
-    <div class="relative w-full max-w-sm items-center">
-      <Input id="search" type="text" placeholder="Search..." class="pl-10" v-model="searchQuery" @keyup.enter="performSearch"/>
-      <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+
+    <!-- Busca -->
+    <div class="relative max-w-md w-full mx-auto">
+      <Input
+        id="search"
+        type="text"
+        placeholder="Search..."
+        class="pl-10 w-full"
+        v-model="searchQuery"
+        @keyup.enter="performSearch"
+      />
+      <span
+        class="absolute left-0 inset-y-0 flex items-center justify-center px-2"
+      >
         <Search class="size-4.5 text-muted-foreground" />
       </span>
     </div>
 
-    <div class="flex items-center space-x-4">
-      <!-- Botão tema -->
+    <!-- Botões -->
+    <div class="flex justify-end items-center space-x-4">
       <button
         @click="toggleDarkMode"
         aria-label="Toggle Dark Mode"
@@ -109,10 +118,10 @@ function performSearch() {
         <component :is="darkMode ? Sun : Moon" class="w-6 h-6" />
       </button>
 
-      <!-- Carrinho -->
       <button
         aria-label="Cart"
         class="cursor-pointer relative text-gray-600 dark:text-gray-300 hover:text-primary transition"
+        v-if="userStore.user"
       >
         <ShoppingCart class="w-6 h-6" />
         <span
@@ -122,19 +131,18 @@ function performSearch() {
         </span>
       </button>
 
-      <!-- Avatar -->
-      <RegisterDialog/>
-      <LoginDialog/>
+      <LoginDialog />
+      <RegisterDialog />
     </div>
   </header>
 
   <div
-    class="border-t border-b border-blue-500 flex justify-center space-x-25 h-10 py-0.75 bg-white dark:bg-black text-gray-800 dark:text-gray-300"
+    class="border-t border-b border-blue-600 flex justify-center space-x-25 h-10 py-0.75 bg-white dark:bg-black text-gray-800 dark:text-gray-300"
   >
     <Button
       @click="handleClick('Home')"
       :class="buttonClass('/')"
-      class="h-8 flex items-center hover:text-primary transition font-semibold cursor-pointer"
+      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold cursor-pointer"
       variant="ghost"
     >
       Home
@@ -142,7 +150,7 @@ function performSearch() {
     <Button
       @click="handleClick('Cards')"
       :class="buttonClass('/cards')"
-      class="h-8 flex items-center hover:text-primary transition font-semibold cursor-pointer"
+      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold cursor-pointer"
       variant="ghost"
     >
       Cards
@@ -150,14 +158,14 @@ function performSearch() {
     <Button
       @click="handleClick('Cart')"
       :class="buttonClass('/cart')"
-      class="h-8 flex items-center hover:text-primary transition font-semibold cursor-pointer"
+      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold cursor-pointer"
       variant="ghost"
     >
       Cart
     </Button>
     <Button
       @click="handleClick('Events')"
-      class="h-8 flex items-center hover:text-primary transition font-semibold cursor-pointer"
+      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold cursor-pointer"
       variant="ghost"
     >
       Events

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-
-// let type = "Fairy";
+import { ref, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 
 interface CardImage {
   small: string;
@@ -32,17 +31,23 @@ function shuffleArray<T>(array: T[]): T[] {
   return arr;
 }
 
+const route = useRoute();
+
 const fetchCards = async () => {
   loading.value = true;
   try {
-    // const response = await fetch("https://api.pokemontcg.io/v2/cards?q=types:" + type + "&pageSize=30", {
-    const response = await fetch(
-      "https://api.pokemontcg.io/v2/cards?pageSize=30",
-      {
-        headers: {},
-      }
-    );
+    const query = route.query.q as string | undefined;
+    let url = "https://api.pokemontcg.io/v2/cards?pageSize=30";
+
+    if (query) {
+      url = `https://api.pokemontcg.io/v2/cards?q=name:${encodeURIComponent(
+        query
+      )}&pageSize=30`;
+    }
+
+    const response = await fetch(url, { headers: {} });
     const data = await response.json();
+
     if (data.data) {
       cards.value = shuffleArray(data.data);
     } else {
@@ -57,10 +62,17 @@ const fetchCards = async () => {
 };
 
 onMounted(fetchCards);
+
+watch(
+  () => route.query.q,
+  () => {
+    fetchCards();
+  }
+);
 </script>
 
 <template>
-  <div class="pt-8 max-w-6xl mx-auto p-3">
+  <div class="pt-3 p-3">
     <div v-if="loading" class="flex pt-15 justify-center">
       <img src="/poke.png" class="h-15 animate-spin" />
     </div>
@@ -69,12 +81,19 @@ onMounted(fetchCards);
       v-else-if="cards.length === 0"
       class="text-center pt-15 text-gray-700 text-xl"
     >
-      <label> Ops... O Pokémon escapou! </label>
+      <div class="block">
+        <Label class="text-2xl font-semibold">Ops... O Pokémon escapou!</Label>
+        <Label class="text-xl font-semibold">
+          <br />Parece que o seu Pokémon não foi encontrado em nossa base de
+          dados.
+        </Label>
+      </div>
     </div>
 
     <div
       v-else
-      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8"
+      class="grid gap-4"
+      style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))"
     >
       <img
         v-for="card in cards"

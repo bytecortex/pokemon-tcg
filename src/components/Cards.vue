@@ -36,30 +36,19 @@ const route = useRoute();
 const fetchCards = async () => {
   loading.value = true;
   try {
-    const query = route.query.q as string | undefined;
-    const filtered = route.query.f as string | undefined;
+    const queryName = route.query.q as string | undefined;
+    const queryTypes = route.query.types as string | undefined;
 
-    let qParams: string[] = [];
+    let queryParts: string[] = [];
 
-    if (query) {
-      qParams.push(`name:${query}`);
-    }
+    if (queryName) queryParts.push(`name:"${queryName}"`);
+    if (queryTypes) queryParts.push(`types:"${queryTypes}"`);
 
-    if (filtered) {
-      const types = filtered
-        .split(",")
-        .map((t) => `types:${t}`)
-        .join(" OR ");
-      qParams.push(`(${types})`);
-    }
-
-    let qString = qParams.join(" AND ");
     let url = "https://api.pokemontcg.io/v2/cards?pageSize=30";
 
-    if (qString) {
-      url = `https://api.pokemontcg.io/v2/cards?q=${encodeURIComponent(
-        qString
-      )}&pageSize=30`;
+    if (queryParts.length > 0) {
+      const queryString = encodeURIComponent(queryParts.join(" "));
+      url = `https://api.pokemontcg.io/v2/cards?q=${queryString}&pageSize=30`;
     }
 
     const response = await fetch(url);
@@ -74,12 +63,10 @@ const fetchCards = async () => {
   }
 };
 
-onMounted(() => {
-  fetchCards();
-});
+onMounted(fetchCards);
 
 watch(
-  () => [route.query.q, route.query.f],
+  () => [route.query.q, route.query.types],
   () => {
     fetchCards();
   }
@@ -92,17 +79,11 @@ watch(
       <img src="/poke.png" class="h-15 animate-spin" />
     </div>
 
-    <div
-      v-else-if="cards.length === 0"
-      class="text-center pt-15 text-gray-700 text-xl"
-    >
+    <div v-else-if="cards.length === 0" class="text-center pt-15 text-gray-700 text-xl">
       <label> Ops... O Pokémon escapou! </label>
     </div>
 
-    <div
-      v-else
-      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8"
-    >
+    <div v-else class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
       <img
         v-for="card in cards"
         :key="card.id"

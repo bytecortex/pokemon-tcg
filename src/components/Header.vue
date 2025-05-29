@@ -61,7 +61,7 @@ const route = useRoute();
 function buttonClass(path: string) {
   if (route.path === path) {
     return [
-      "h-8 flex rounded-xl items-center transition font-semibold cursor-pointer text-primary text-white bg-blue-600",
+      "h-8 flex rounded-xl items-center transition font-semibold text-primary text-white bg-blue-600",
     ];
   }
 }
@@ -142,7 +142,7 @@ const userStore = useUserStore();
     <Button
       @click="handleClick('Home')"
       :class="buttonClass('/')"
-      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold cursor-pointer"
+      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold"
       variant="ghost"
     >
       Home
@@ -150,7 +150,7 @@ const userStore = useUserStore();
     <Button
       @click="handleClick('Cards')"
       :class="buttonClass('/cards')"
-      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold cursor-pointer"
+      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold"
       variant="ghost"
     >
       Cards
@@ -158,14 +158,14 @@ const userStore = useUserStore();
     <Button
       @click="handleClick('Cart')"
       :class="buttonClass('/cart')"
-      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold cursor-pointer"
+      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold"
       variant="ghost"
     >
       Cart
     </Button>
     <Button
       @click="handleClick('Events')"
-      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold cursor-pointer"
+      class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold"
       variant="ghost"
     >
       Events

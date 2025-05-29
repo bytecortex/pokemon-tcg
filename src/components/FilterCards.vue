@@ -18,7 +18,7 @@ import { SlidersHorizontal, ArrowDownUp } from "lucide-vue-next";
 
 <template>
   <div
-    class="flex justify-start items-center shadow-md w-full h-16 pt-2 px-4 bg-white dark:bg-black text-gray-800 dark:text-gray-300"
+    class="flex justify-start shadow-md rounded-full items-center w-full h-16 pt-3 px-4 bg-white dark:bg-black text-gray-800 dark:text-gray-300 space-x-4"
   >
     <!-- Filtrar cartas -->
     <div class="flex">
@@ -64,11 +64,13 @@ import { SlidersHorizontal, ArrowDownUp } from "lucide-vue-next";
     </div>
 
     <!-- Ordenar -->
-    <div class="flex pl-2">
-      <Button class="cursor-pointer" variant="outline">
-        <ArrowDownUp />
-        Sort
-      </Button>
+    <Button class="cursor-pointer" variant="outline">
+      <ArrowDownUp />
+      Sort
+    </Button>
+
+    <div class="h-5 w-1">
+      <Separator orientation="vertical" />
     </div>
   </div>
 </template>

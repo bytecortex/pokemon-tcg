@@ -40,9 +40,9 @@ const fetchCards = async () => {
     let url = "https://api.pokemontcg.io/v2/cards?pageSize=30";
 
     if (query) {
-      url = `https://api.pokemontcg.io/v2/cards?q=name:${encodeURIComponent(
+      url = `https://api.pokemontcg.io/v2/cards?q=name:"${encodeURIComponent(
         query
-      )}&pageSize=30`;
+      )}"&pageSize=30`;
     }
 
     const response = await fetch(url, { headers: {} });

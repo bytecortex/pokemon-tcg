@@ -47,9 +47,17 @@ async function handleRegister() {
     password.value = "";
   } catch (error: any) {
     if (error.response) {
-      alert(error.response.data.detail);
+      const detail = error.response.data.detail;
+
+      if (Array.isArray(detail)) {
+        alert(detail.join("\n"));
+      } else if (typeof detail === "string") {
+        alert(detail);
+      } else {
+        alert("Erro desconhecido.");
+      }
     } else {
-      alert("An error occurred");
+      alert("Ocorreu um erro inesperado.");
     }
   } finally {
     loading.value = false;
@@ -62,22 +70,15 @@ async function handleRegister() {
     <Dialog>
       <div v-if="!userStore.user">
         <DialogTrigger>
-          <Button
-            type="button"
-            class="cursor-pointer"
-            @click=""
-            variant="outline"
-          >
+          <Button type="button" class="cursor-pointer" @click="" variant="outline">
             Sign up
           </Button>
         </DialogTrigger>
       </div>
 
       <DialogContent class="sm:max-w-[600px]">
-        <DialogClose
-          as-child
-          class="cursor-pointer ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
-        >
+        <DialogClose as-child
+          class="cursor-pointer ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
           <X />
           <span class="sr-only">Close</span>
         </DialogClose>
@@ -101,11 +102,7 @@ async function handleRegister() {
               <FormItem>
                 <FormLabel class="flex">Email</FormLabel>
                 <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="example@email.com"
-                    v-model="email"
-                  />
+                  <Input type="text" placeholder="example@email.com" v-model="email" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -116,20 +113,11 @@ async function handleRegister() {
                 <div class="flex">
                   <FormControl class="relative w-full">
                     <div class="relative w-full">
-                      <Input
-                        :type="showPassword ? 'text' : 'password'"
-                        placeholder="••••••••"
-                        v-model="password"
-                        class="pr-10"
-                      />
-                      <span
-                        class="cursor-pointer absolute inset-y-0 right-2 flex items-center justify-start px-2"
-                        @click="showPassword = !showPassword"
-                      >
-                        <component
-                          :is="showPassword ? EyeOff : Eye"
-                          class="size-5 text-muted-foreground"
-                        />
+                      <Input :type="showPassword ? 'text' : 'password'" placeholder="••••••••" v-model="password"
+                        class="pr-10" />
+                      <span class="cursor-pointer absolute inset-y-0 right-2 flex items-center justify-start px-2"
+                        @click="showPassword = !showPassword">
+                        <component :is="showPassword ? EyeOff : Eye" class="size-5 text-muted-foreground" />
                       </span>
                     </div>
                   </FormControl>
@@ -140,21 +128,13 @@ async function handleRegister() {
 
             <DialogFooter class="pt-2">
               <div class="w-full flex justify-start">
-                <Button
-                  type="button"
-                  @click="handleRegister"
-                  class="cursor-pointer"
-                >
+                <Button type="button" @click="handleRegister" class="cursor-pointer">
                   Register
                 </Button>
               </div>
             </DialogFooter>
           </form>
-          <img
-            src="/squirtle-full-register.png"
-            alt="Side"
-            class="w-[200px] h-[200px] self-end"
-          />
+          <img src="/squirtle-full-register.png" alt="Side" class="w-[200px] h-[200px] self-end" />
         </div>
       </DialogContent>
     </Dialog>

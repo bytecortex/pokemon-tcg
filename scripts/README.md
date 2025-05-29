@@ -1,15 +1,23 @@
 
 # Configuração do backend
 
-### 1. Criar o ambiente virtual
+### 1. Navegue até a pasta `scripts`:
 
 ```bash
-python -m venv .venv
-````
+cd scripts
+```
 
 ---
 
-### 2. Ativar o ambiente virtual
+### 2. Criar o ambiente virtual
+
+```bash
+python -m venv .venv
+```
+
+---
+
+### 3. Ativar o ambiente virtual
 
 * **Windows**:
 
@@ -25,7 +33,7 @@ source .venv/bin/activate
 
 ---
 
-### 3. Instalar as dependências
+### 4. Instalar as dependências
 
 ```bash
 pip install -r requirements.txt
@@ -33,13 +41,7 @@ pip install -r requirements.txt
 
 ---
 
-### 4. Executar o backend
-
-* Navegue até a pasta `backend` (se aplicável):
-
-```bash
-cd backend
-```
+### 5. Rodar o servidor 
 
 * Com o ambiente virtual **ativo**, execute:
 
@@ -51,7 +53,7 @@ uvicorn app:app --reload --host 0.0.0.0 --port 8000
 
 ## ⚠️ Observações importantes
 
-* O comando `uvicorn app:app` pressupõe que dentro da pasta `backend` existe um arquivo `app.py` ou uma pasta `app` com `__init__.py` e um objeto `app` exposto.
+* O comando `uvicorn app:app` pressupõe que dentro da pasta `scripts` existe um arquivo `app.py` ou uma pasta `app` com `__init__.py` e um objeto `app` exposto.
 * O parâmetro `--reload` é útil para desenvolvimento, pois recarrega automaticamente o servidor quando o código é alterado.
 * Em produção, **não** use `--reload` e avalie se realmente precisa expor `--host 0.0.0.0`.
 

@@ -46,7 +46,7 @@ pip install -r requirements.txt
 * Com o ambiente virtual **ativo**, execute:
 
 ```bash
-uvicorn app:app --reload --host 0.0.0.0 --port 8000
+uvicorn app:app --reload
 ```
 
 ---

@@ -89,7 +89,7 @@ async function handleRegister() {
 
         <div class="flex gap-4">
           <form id="dialogForm" @submit="" class="flex-1 flex flex-col gap-4">
-            <FormField v-slot="{ componentField }" name="username">
+            <FormField name="username">
               <FormItem>
                 <FormLabel class="flex">Name</FormLabel>
                 <FormControl>
@@ -98,7 +98,7 @@ async function handleRegister() {
                 <FormMessage />
               </FormItem>
             </FormField>
-            <FormField v-slot="{ componentField }" name="email">
+            <FormField name="email">
               <FormItem>
                 <FormLabel class="flex">Email</FormLabel>
                 <FormControl>
@@ -107,7 +107,7 @@ async function handleRegister() {
                 <FormMessage />
               </FormItem>
             </FormField>
-            <FormField v-slot="{ componentField }" name="password">
+            <FormField name="password">
               <FormItem>
                 <FormLabel class="flex">Password</FormLabel>
                 <div class="flex">

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dialog,
   DialogTitle,
@@ -92,7 +91,7 @@ async function handleLogin() {
 
         <div class="flex gap-4">
           <form id="dialogForm" @submit="" class="flex-1 flex flex-col gap-4">
-            <FormField v-slot="{ componentField }" name="username">
+            <FormField name="username">
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
@@ -101,7 +100,7 @@ async function handleLogin() {
                 <FormMessage />
               </FormItem>
             </FormField>
-            <FormField v-slot="{ componentField }" name="password">
+            <FormField name="password">
               <FormItem class="pt-2">
                 <FormLabel>Password</FormLabel>
                 <FormControl class="relative w-full">

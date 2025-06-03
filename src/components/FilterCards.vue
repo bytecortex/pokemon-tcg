@@ -63,6 +63,11 @@ function toggleType(type: string, checked: boolean) {
     selectedType.value = null;
   }
 }
+
+function onCheckboxChange(e: Event, type: string) {
+  const target = e.target as HTMLInputElement;
+  toggleType(type, target.checked);
+}
 </script>
 
 <template>
@@ -88,7 +93,7 @@ function toggleType(type: string, checked: boolean) {
 
           <div v-for="type in types" :key="type" class="flex items-center space-x-2 pt-2">
             <input type="checkbox" :id="`type-${type}`" :value="type" :checked="selectedType === type"
-              @change="e => toggleType(type, e.target.checked)" class="cursor-pointer" />
+              @change="e => onCheckboxChange(e, type)" class="cursor-pointer" />
             <label :for="`type-${type}`" class="text-md font-medium leading-none cursor-pointer">
               {{ type }}
             </label>

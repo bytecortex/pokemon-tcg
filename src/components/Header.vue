@@ -4,7 +4,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useRoute } from "vue-router";
 import { ref, watch, onMounted } from "vue";
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "@/server/userStore";
 import LoginDialog from "@/components/LoginDialog.vue";
 import RegisterDialog from "@/components/RegisterDialog.vue";
 import { Sun, Moon, ShoppingCart, Search } from "lucide-vue-next";

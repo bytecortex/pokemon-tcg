@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dialog,
   DialogTitle,
@@ -21,7 +22,7 @@ import { X, Eye, EyeOff } from "lucide-vue-next";
 import { Button } from "./ui/button";
 import axios from "axios";
 import { ref } from "vue";
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "@/server/userStore";
 
 const email = ref("");
 const password = ref("");
@@ -91,7 +92,7 @@ async function handleLogin() {
 
         <div class="flex gap-4">
           <form id="dialogForm" @submit="" class="flex-1 flex flex-col gap-4">
-            <FormField name="username">
+            <FormField v-slot="{ componentField }" name="username">
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
@@ -100,7 +101,7 @@ async function handleLogin() {
                 <FormMessage />
               </FormItem>
             </FormField>
-            <FormField name="password">
+            <FormField v-slot="{ componentField }" name="password">
               <FormItem class="pt-2">
                 <FormLabel>Password</FormLabel>
                 <FormControl class="relative w-full">
@@ -120,7 +121,7 @@ async function handleLogin() {
             <DialogFooter class="pt-2">
               <div class="flex justify-start w-full">
                 <Button type="button" @click="handleLogin" :disabled="loading" class="cursor-pointer">
-                  {{ loading ? "Logging in..." : "Log in" }}
+                  Log in
                 </Button>
               </div>
             </DialogFooter>

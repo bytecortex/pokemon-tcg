@@ -21,7 +21,7 @@ import axios from "axios";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { X, Eye, EyeOff } from "lucide-vue-next";
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "@/server/userStore";
 
 const name = ref("");
 const email = ref("");
@@ -89,7 +89,7 @@ async function handleRegister() {
 
         <div class="flex gap-4">
           <form id="dialogForm" @submit="" class="flex-1 flex flex-col gap-4">
-            <FormField name="username">
+            <FormField v-slot="{ componentField }" name="username">
               <FormItem>
                 <FormLabel class="flex">Name</FormLabel>
                 <FormControl>
@@ -98,7 +98,7 @@ async function handleRegister() {
                 <FormMessage />
               </FormItem>
             </FormField>
-            <FormField name="email">
+            <FormField v-slot="{ componentField }" name="email">
               <FormItem>
                 <FormLabel class="flex">Email</FormLabel>
                 <FormControl>
@@ -107,7 +107,7 @@ async function handleRegister() {
                 <FormMessage />
               </FormItem>
             </FormField>
-            <FormField name="password">
+            <FormField v-slot="{ componentField }" name="password">
               <FormItem>
                 <FormLabel class="flex">Password</FormLabel>
                 <div class="flex">

@@ -33,7 +33,7 @@ const isDialogOpen = ref(false);
 async function handleLogin() {
   loading.value = true;
   try {
-    const response = await axios.post("http://localhost:8000/login", {
+    const response = await axios.post("http://localhost:8000/login", { // Prod: "api/login" || Dev: "http://localhost:8000/login"
       email: email.value,
       password: password.value,
     });
@@ -50,14 +50,18 @@ async function handleLogin() {
       const detail = error.response.data.detail;
 
       if (Array.isArray(detail)) {
-        alert(detail.join("\n"));
+        const messages = detail.map((err: any) => {
+          const field = err.loc[1] ?? "Field";
+          return `${field}: ${err.msg}`;
+        });
+        alert(messages.join("\n"));
       } else if (typeof detail === "string") {
         alert(detail);
       } else {
-        alert("Erro desconhecido.");
+        alert("Unknown error.");
       }
     } else {
-      alert("Ocorreu um erro inesperado.");
+      alert("An unexpected error has occurred.");
     }
   } finally {
     loading.value = false;

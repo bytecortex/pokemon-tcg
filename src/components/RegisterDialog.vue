@@ -29,35 +29,41 @@ const password = ref("");
 const loading = ref(false);
 const userStore = useUserStore();
 const showPassword = ref(false);
+const isDialogOpen = ref(false);
 
 async function handleRegister() {
   loading.value = true;
   try {
-    const response = await axios.post("http://localhost:8000/register", {
+    const response = await axios.post("http://localhost:8000/register", { // Prod: "api/register" || Dev: "http://localhost:8000/register"
       name: name.value,
       email: email.value,
       password: password.value,
     });
 
     alert(response.data.message);
-    // Você pode aqui resetar os campos ou fechar o modal
 
     name.value = "";
     email.value = "";
     password.value = "";
+
+    isDialogOpen.value = false;
   } catch (error: any) {
     if (error.response) {
       const detail = error.response.data.detail;
 
       if (Array.isArray(detail)) {
-        alert(detail.join("\n"));
+        const messages = detail.map((err: any) => {
+          const field = err.loc[1] ?? "Field";
+          return `${field}: ${err.msg}`;
+        });
+        alert(messages.join("\n"));
       } else if (typeof detail === "string") {
         alert(detail);
       } else {
-        alert("Erro desconhecido.");
+        alert("Unknown error.");
       }
     } else {
-      alert("Ocorreu um erro inesperado.");
+      alert("An unexpected error has occurred.");
     }
   } finally {
     loading.value = false;
@@ -67,7 +73,7 @@ async function handleRegister() {
 
 <template>
   <Form>
-    <Dialog>
+    <Dialog v-model:open="isDialogOpen">
       <div v-if="!userStore.user">
         <DialogTrigger>
           <Button type="button" class="cursor-pointer" @click="" variant="outline">

@@ -32,9 +32,6 @@ importers:
       pinia:
         specifier: ^3.0.2
         version: 3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))
-      pnpm:
-        specifier: ^10.11.0
-        version: 10.11.0
       reka-ui:
         specifier: ^2.2.1
         version: 2.2.1(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))
@@ -997,11 +994,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  pnpm@10.11.0:
-    resolution: {integrity: sha512-ZUBYP0HMX2KOs9l3Ps7oAvT575kjzEW2mJD7R5kdSwkpZGlOw6T3OKQgyRijMwYsi5JdMS9C5PDCY+tgNVH5dw==}
-    engines: {node: '>=18.12'}
-    hasBin: true
 
   postcss@8.5.3:
     resolution: {integrity: sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==}
@@ -2009,8 +2001,6 @@ snapshots:
       vue: 3.5.14(typescript@5.8.3)
     optionalDependencies:
       typescript: 5.8.3
-
-  pnpm@10.11.0: {}
 
   postcss@8.5.3:
     dependencies:

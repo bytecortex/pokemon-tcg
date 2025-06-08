@@ -1,0 +1,61 @@
+# Node.js e Vite (frontend)
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Arquivos de build / cache do Vite
+.cache/
+.vscode/
+*.local
+
+# Typescript
+*.tsbuildinfo
+
+# Arquivos de ambiente (não subir)
+.env
+.env.* 
+.env.local
+
+# Python (backend)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pytest_cache/
+.pytest_cache/
+.pytest_cache/
+*.egg-info/
+*.eggs/
+*.egg
+*.tox/
+.venv/
+venv/
+ENV/
+env/
+
+# Logs e temporários
+*.log
+*.tmp
+*.temp
+*.cache
+
+# IDEs e editores
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.DS_Store
+
+# Arquivos sensíveis
+*.pem
+*.key
+
+# Outros
+.DS_Store
+Thumbs.db

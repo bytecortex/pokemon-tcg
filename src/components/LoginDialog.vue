@@ -19,7 +19,7 @@ import {
 import { Input } from "./ui/input";
 import { X, Eye, EyeOff } from "lucide-vue-next";
 import { Button } from "./ui/button";
-import axios from "axios";
+import api from '@/api';
 import { ref } from "vue";
 import { useUserStore } from "@/server/userStore";
 
@@ -33,7 +33,7 @@ const isDialogOpen = ref(false);
 async function handleLogin() {
   loading.value = true;
   try {
-    const response = await axios.post("http://localhost:8000/login", { // Prod: "api/login" || Dev: "http://localhost:8000/login"
+    const response = await api.post("/login", { 
       email: email.value,
       password: password.value,
     });

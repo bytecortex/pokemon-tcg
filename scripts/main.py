@@ -6,11 +6,15 @@ from passlib.hash import bcrypt
 from fastapi.middleware.cors import CORSMiddleware
 import mysql.connector
 import mysql.connector.errors
+from pathlib import Path
 from dotenv import load_dotenv
 import os
 
 
-load_dotenv()
+if os.getenv("APP_ENV") != "production":
+    parent_dir = Path(__file__).resolve().parent.parent
+    dotenv_path = parent_dir / '.env'
+    load_dotenv(dotenv_path)
 
 app = FastAPI()
 
@@ -24,23 +28,30 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     )
 
 # CORS
+origins = [
+    "https://poqg.live",  # Produção
+]
+
+if os.getenv("ENV") == "development":
+    origins = ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Prod: https://poqg.live || Dev: *
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Authorization", "Content-Type"]
 )
 
 # Database connection
 def get_connection():
     try:
         conn = mysql.connector.connect(
-            user=os.getenv("user"),
-            password=os.getenv("password"),
-            host=os.getenv("host"),
-            port=os.getenv("port"),
-            database=os.getenv("dbname")
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            host=os.getenv("DB_HOST"),
+            port=os.getenv("DB_PORT"),
+            database=os.getenv("DB_NAME")
         )
         return conn
     except mysql.connector.Error as e:

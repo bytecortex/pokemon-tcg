@@ -51,10 +51,9 @@ uvicorn main:app --reload
 
 ---
 
-## ⚠️ Observações importantes
+## ⚠️ Observações
 
-* O comando `uvicorn app:app` pressupõe que dentro da pasta `scripts` existe um arquivo `app.py` ou uma pasta `app` com `__init__.py` e um objeto `app` exposto.
-* O parâmetro `--reload` é útil para desenvolvimento, pois recarrega automaticamente o servidor quando o código é alterado.
-* Em produção, **não** use `--reload` e avalie se realmente precisa expor `--host 0.0.0.0`.
+Antes de rodar o servidor, é necessário garantir que você terá acesso ao banco de dados. Caso utilize um túnel ssh o comando abaixo pode ser útil:
+> ssh -f -N -L 3307:localhost:3306 [server-username]@[server-ip] -p [ssh port]
 
 ---

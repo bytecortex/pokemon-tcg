@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ref } from "vue";
-import axios from "axios";
+import api from '@/api';
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { X, Eye, EyeOff } from "lucide-vue-next";
@@ -34,7 +34,7 @@ const isDialogOpen = ref(false);
 async function handleRegister() {
   loading.value = true;
   try {
-    const response = await axios.post("http://localhost:8000/register", { // Prod: "api/register" || Dev: "http://localhost:8000/register"
+    const response = await api.post("/register", {
       name: name.value,
       email: email.value,
       password: password.value,

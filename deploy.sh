@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+ORIGINAL_DIR="$(pwd)"
+
 # Carrega variáveis do .env (se disponível)
 if [ -f .env ]; then
   export $(grep -v '^#' .env | xargs)
@@ -10,8 +12,8 @@ else
 fi
 
 # Carrega variáveis do .env.production (se disponível)
-if [ -f .env.production ]; then
-  export $(grep -v '^#' .env.production | xargs)
+if [ -f ./frontend/.env.production ]; then
+  export $(grep -v '^#' ./frontend/.env.production | xargs)
 else
   echo "⚠️ Arquivo .env.production não encontrado. Continuando com as variáveis do .env"
 fi
@@ -34,6 +36,8 @@ pnpm run build || { echo "❌ Build do front falhou"; exit 1; }
 echo "🚀 Subindo front-end buildado para o servidor..."
 rsync -avz -e "ssh -p $SSH_PORT" --delete "$LOCAL_FRONT_BUILD_DIR/" "$SSH_USER@[$SSH_HOST]:$REMOTE_FRONT_PATH"
 
+# GO BACK DEPLOY.SH DIR
+cd "$ORIGINAL_DIR" || { echo "❌ Não foi possível retornar à pasta raiz do script"; exit 1; }
 
 # SYNC BACKEND
 echo "📦 Subindo back-end (excluindo .venv e .env)..."

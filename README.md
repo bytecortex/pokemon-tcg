@@ -23,23 +23,23 @@ A simple e-commerce platform for buying and selling Pokémon TCG cards. Built wi
 
 ### Prerequisites:
 
-- MySQL
-- Node.js (for Vue.js frontend and backend, if applicable)
+- Docker
+- Linux environment or WSL 
 
 ### Steps:
 
-1. Clone the repository and navigate to the project folder:
+1. Using Linux or WSL, clone the repository and navigate to the project folder:
    ```sh
    git clone https://github.com/bytecortex/pokemon-tcg.git
    cd pokemon-tcg
    ```
-2. Install Vue.js dependencies:
+2. Configure environment variables:
+
+   - `.env` — located inside the `./backend` folder
+
+3. Install the dependencies and start the project:
    ```sh
-   pnpm install
-   ```
-3. Start the Vue.js development server:
-   ```sh
-   pnpm run dev
+   docker compose up --build
    ```
 
 ## Usage 

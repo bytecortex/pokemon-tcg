@@ -26,3 +26,4 @@ dist-ssr
 .env.production
 .venv
 __pycache__/
+.pnpm-store

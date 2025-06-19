@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import router from "@/routes";
+import router from "@/router";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useRoute } from "vue-router";

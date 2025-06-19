@@ -71,7 +71,7 @@ const searchQuery = ref("");
 function performSearch() {
   const cleanedQuery = searchQuery.value.trim().replace(/\s+/g, " ");
   if (cleanedQuery !== "") {
-    router.push({ path: "/cards", query: { q: cleanedQuery } });
+    router.push({ path: "/cards", query: { name: cleanedQuery } });
   }
 }
 

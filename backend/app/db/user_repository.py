@@ -1,5 +1,4 @@
 from app.db.connection import Database
-from fastapi import HTTPException
 
 class UserRepository:
     def __init__(self):

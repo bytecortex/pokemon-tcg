@@ -1,75 +1,18 @@
 <script lang="ts" setup>
 import { useRoute } from "vue-router";
-import { ref, onMounted, watch } from "vue";
-
-interface CardImage {
-  small: string;
-  large?: string;
-}
-
-interface CardSet {
-  id: string;
-  name: string;
-}
-
-interface Card {
-  id: string;
-  name: string;
-  images: CardImage;
-  set: CardSet;
-}
-
-const cards = ref<Card[]>([]);
-const loading = ref(false);
-
-function shuffleArray<T>(array: T[]): T[] {
-  const arr = array.slice();
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
+import { onMounted, watch } from "vue";
+import { useCards } from "@/composables/useCards";
 
 const route = useRoute();
+const { cards, loading, fetchCards } = useCards();
 
-const fetchCards = async () => {
-  loading.value = true;
-  try {
-    const queryName = route.query.q as string | undefined;
-    const queryTypes = route.query.types as string | undefined;
-
-    let queryParts: string[] = [];
-
-    if (queryName) queryParts.push(`name:"${queryName}"`);
-    if (queryTypes) queryParts.push(`types:"${queryTypes}"`);
-
-    let url = "https://api.pokemontcg.io/v2/cards?pageSize=30";
-
-    if (queryParts.length > 0) {
-      const queryString = encodeURIComponent(queryParts.join(" "));
-      url = `https://api.pokemontcg.io/v2/cards?q=${queryString}&pageSize=30`;
-    }
-
-    const response = await fetch(url);
-    const data = await response.json();
-
-    cards.value = data.data ? shuffleArray(data.data) : [];
-  } catch (error) {
-    console.error("Erro ao buscar cartas:", error);
-    cards.value = [];
-  } finally {
-    loading.value = false;
-  }
-};
-
-onMounted(fetchCards);
+onMounted(() => {
+  fetchCards({ name: route.query.name as string, types: route.query.types as string });
+});
 
 watch(
-  () => [route.query.q, route.query.types],
-  () => {
-    fetchCards();
-  }
+  () => [route.query.name, route.query.types],
+  () => {fetchCards({ name: route.query.name as string, types: route.query.types as string });}
 );
 </script>
 

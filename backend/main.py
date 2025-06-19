@@ -2,8 +2,8 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import auth
 from app.core.config import settings
+from app.routers import auth_router, cards_router
 
 app = FastAPI()
 
@@ -24,4 +24,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router)
+app.include_router(auth_router.router)
+app.include_router(cards_router.router)

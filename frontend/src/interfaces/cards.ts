@@ -3,14 +3,11 @@ export interface CardImage {
   large?: string;
 }
 
-export interface CardSet {
-  id: string;
-  name: string;
-}
-
 export interface Card {
   id: string;
   name: string;
   images: CardImage;
-  set: CardSet;
+  series: string;
+  rarity: string;
+  price: number;
 }

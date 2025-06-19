@@ -8,7 +8,7 @@ class CardRepository:
         cursor = db.cursor(dictionary=True)
         try:
             query = """
-                SELECT id, name, image_url_small AS small, set_name AS set_name
+                SELECT id, name, image_url_small AS small, series, rarity, price
                 FROM cards
             """
             filters = []

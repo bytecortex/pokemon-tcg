@@ -1,5 +1,5 @@
 from typing import List, Optional
-from app.schemas.cards_schema import CardSchema, CardImage, CardSet
+from app.schemas.cards_schema import CardSchema, CardImage
 from app.db.cards_repository import CardRepository
 
 class CardService:
@@ -13,7 +13,9 @@ class CardService:
                 id=row["id"],
                 name=row["name"],
                 images=CardImage(small=row["small"]),
-                set=CardSet(name=row["set_name"], id="")
+                series=row["series"],
+                rarity=row["rarity"],
+                price=row["price"]
             )
             for row in results
         ]

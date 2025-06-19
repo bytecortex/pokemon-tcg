@@ -1,11 +1,11 @@
 <script setup lang='ts'>
 import Cards from '@/components/Cards.vue';
-import Header from '@/components/Header.vue';
+import TheHeader from '@/components/TheHeader.vue';
 import Callout from '@/components/Callout.vue';
 </script>
 
 <template>
-  <Header/>
+  <TheHeader/>
   <Callout/>
   <Cards/>
 </template>

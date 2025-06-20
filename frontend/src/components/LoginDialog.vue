@@ -19,7 +19,7 @@ import {
 import { Input } from "./ui/input";
 import { X, Eye, EyeOff } from "lucide-vue-next";
 import { Button } from "./ui/button";
-import api from '@/api';
+import api from "@/api";
 import { ref } from "vue";
 import { useUserStore } from "@/server/userStore";
 
@@ -33,7 +33,7 @@ const isDialogOpen = ref(false);
 async function handleLogin() {
   loading.value = true;
   try {
-    const response = await api.post("/login", { 
+    const response = await api.post("/login", {
       email: email.value,
       password: password.value,
     });
@@ -77,16 +77,21 @@ async function handleLogin() {
           <Button type="button" @click="isDialogOpen = true">Log in</Button>
         </DialogTrigger>
       </div>
-      <span v-if="userStore.user" class="font-medium cursor-pointer hover:underline" @click="userStore.logout()"
-        title="Logout">
+      <span
+        v-if="userStore.user"
+        class="font-medium cursor-pointer hover:underline"
+        @click="userStore.logout()"
+        title="Logout"
+      >
         {{ userStore.user.name }}
       </span>
 
       <DialogContent class="sm:max-w-[600px]">
-        <DialogClose as-child
-          class="cursor-pointer ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
+        <DialogClose
+          as-child
+          class="cursor-pointer absolute top-4 right-4 opacity-70 hover:opacity-100 transition-opacity"
+        >
           <X />
-          <span class="sr-only">Close</span>
         </DialogClose>
 
         <DialogHeader class="flex items-center">
@@ -99,7 +104,11 @@ async function handleLogin() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="text" placeholder="example@email.com" v-model="email" />
+                  <Input
+                    type="text"
+                    placeholder="example@email.com"
+                    v-model="email"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -109,11 +118,20 @@ async function handleLogin() {
                 <FormLabel>Password</FormLabel>
                 <FormControl class="relative w-full">
                   <div class="relative w-full">
-                    <Input :type="showPassword ? 'text' : 'password'" placeholder="••••••••" v-model="password"
-                      class="pr-10" />
-                    <span class="cursor-pointer absolute inset-y-0 right-2 flex items-center justify-start px-2"
-                      @click="showPassword = !showPassword">
-                      <component :is="showPassword ? EyeOff : Eye" class="size-5 text-muted-foreground" />
+                    <Input
+                      :type="showPassword ? 'text' : 'password'"
+                      placeholder="••••••••"
+                      v-model="password"
+                      class="pr-10"
+                    />
+                    <span
+                      class="cursor-pointer absolute inset-y-0 right-2 flex items-center justify-start px-2"
+                      @click="showPassword = !showPassword"
+                    >
+                      <component
+                        :is="showPassword ? EyeOff : Eye"
+                        class="size-5 text-muted-foreground"
+                      />
                     </span>
                   </div>
                 </FormControl>
@@ -123,13 +141,22 @@ async function handleLogin() {
 
             <DialogFooter class="pt-2">
               <div class="flex justify-start w-full">
-                <Button type="button" @click="handleLogin" :disabled="loading" class="cursor-pointer">
+                <Button
+                  type="button"
+                  @click="handleLogin"
+                  :disabled="loading"
+                  class="cursor-pointer"
+                >
                   Log in
                 </Button>
               </div>
             </DialogFooter>
           </form>
-          <img src="/pikachu-full-login.png" alt="Side" class="w-[200px] h-[200px]" />
+          <img
+            src="/pikachu-full-login.png"
+            alt="Side"
+            class="w-[200px] h-[200px]"
+          />
         </div>
       </DialogContent>
     </Dialog>

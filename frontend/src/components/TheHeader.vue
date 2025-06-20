@@ -9,7 +9,6 @@ import LoginDialog from "@/components/LoginDialog.vue";
 import RegisterDialog from "@/components/RegisterDialog.vue";
 import { Sun, Moon, ShoppingCart, Search } from "lucide-vue-next";
 
-// Lógica para dark mode
 const darkMode = ref(false);
 
 function toggleDarkMode() {

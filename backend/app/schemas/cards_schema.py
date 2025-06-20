@@ -3,6 +3,7 @@ from typing import Optional
 
 class CardImage(BaseModel):
     small: str
+    large: str
 
 class CardSchema(BaseModel):
     id: str

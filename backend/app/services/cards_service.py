@@ -12,7 +12,7 @@ class CardService:
             CardSchema(
                 id=row["id"],
                 name=row["name"],
-                images=CardImage(small=row["small"]),
+                images=CardImage(small=row["small"], large=row["large"]),
                 series=row["series"],
                 rarity=row["rarity"],
                 price=row["price"]

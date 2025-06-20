@@ -11,11 +11,17 @@ class CardService:
         return [
             CardSchema(
                 id=row["id"],
+                supertype=row["supertype"],
+                subtypes=row["subtypes"],
                 name=row["name"],
                 images=CardImage(small=row["small"], large=row["large"]),
                 series=row["series"],
                 rarity=row["rarity"],
-                price=row["price"]
+                price=row["price"],
+                stock=row['stock'],
+                hp=row['hp'],
+                types=row['types'],
+                flavor_text=row['flavor_text']
             )
             for row in results
         ]

@@ -7,8 +7,14 @@ class CardImage(BaseModel):
 
 class CardSchema(BaseModel):
     id: str
+    supertype: str
+    subtypes: str
     name: str
     images: CardImage
     series: str
     rarity: Optional[str]
     price: float
+    stock: int
+    hp: int
+    types: str
+    flavor_text: Optional[str]

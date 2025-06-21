@@ -1,9 +1,9 @@
 <script setup lang='ts'>
-import Cards from '@/components/Cards.vue';
+import CartContent from '@/components/Cart/CartContent.vue';
 import TheHeader from '@/components/TheHeader.vue';
 </script>
 
 <template>
   <TheHeader/>
-  <Cards/>
+  <CartContent/>
 </template>

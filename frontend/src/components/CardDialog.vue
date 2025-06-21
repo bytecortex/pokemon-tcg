@@ -7,11 +7,13 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import Separator from "./ui/separator/Separator.vue";
-import Button from "@/components/ui/button/Button.vue";
-import { X } from "lucide-vue-next";
+import api from "@/api";
 import { computed } from "vue";
+import { X } from "lucide-vue-next";
 import type { Card } from "@/interfaces/cards";
+import { useUserStore } from "@/server/userStore";
+import Button from "@/components/ui/button/Button.vue";
+import Separator from "@/components/ui/separator/Separator.vue";
 
 const validTypes = [
   "bug",
@@ -48,30 +50,63 @@ const subtypeImage = computed(() => {
   const found = validSubtypes.find((subtype) => subtypes.includes(subtype));
   return found ? `/subtypes/${found}.png` : null;
 });
+
+const userStore = useUserStore();
+
+const userId = userStore.user?.id;
+
+async function addToCart(card: any) {
+  try {
+    const response = await api.post("/cart/add", {
+      user_id: userId,
+      card_id: card.id,
+    });
+
+    // if (!response.ok) {
+    //   throw new Error("Erro ao adicionar ao carrinho");
+    // }
+
+    alert(`"${card.name}" foi adicionado ao carrinho!`);
+  } catch (error) {
+    alert("Erro ao adicionar ao carrinho: " + error);
+  }
+}
 </script>
 
 <template>
-  <Dialog :open="modelValue" @update:open="(val) => emit('update:modelValue', val)">
+  <Dialog
+    :open="modelValue"
+    @update:open="(val) => emit('update:modelValue', val)"
+  >
     <DialogContent class="max-w-[100vh]">
-      <DialogClose as-child
-        class="cursor-pointer absolute top-4 right-4 opacity-70 hover:opacity-100 transition-opacity">
+      <DialogClose
+        as-child
+        class="cursor-pointer absolute top-4 right-4 opacity-70 hover:opacity-100 transition-opacity"
+      >
         <X />
       </DialogClose>
       <section class="flex flex-col md:flex-row gap-6 w-full">
         <!-- Carta -->
         <figure class="w-full md:w-1/2 flex items-center justify-center">
-          <img :src="card?.images?.large || card?.images?.small" :alt="card?.name ?? 'Undefined'"
-            class="w-full rounded" />
+          <img
+            :src="card?.images?.large || card?.images?.small"
+            :alt="card?.name ?? 'Undefined'"
+            class="w-full rounded"
+          />
         </figure>
         <!-- Informações -->
         <aside class="flex flex-col w-full md:w-1/2">
           <DialogHeader>
             <DialogTitle class="text-[5vh] font-bold">
               {{ card?.name }}
-              <img v-if="
-                card.types && validTypes.includes(card.types.toLowerCase())
-              " class="max-w-[5vh] inline mb-2" :src="'/types/' + card.types.toLowerCase() + '.svg'"
-                :alt="card.types" />
+              <img
+                v-if="
+                  card.types && validTypes.includes(card.types.toLowerCase())
+                "
+                class="max-w-[5vh] inline mb-2"
+                :src="'/types/' + card.types.toLowerCase() + '.svg'"
+                :alt="card.types"
+              />
             </DialogTitle>
             <!-- Texto Descritivo -->
             <span class="text-[2vh]">{{ card.flavor_text }}</span>
@@ -108,12 +143,16 @@ const subtypeImage = computed(() => {
               <dd class="ml-2">{{ card.hp }}</dd>
             </div>
           </dl>
-          
+
           <figure v-if="subtypeImage">
             <div class="pt-2">
               <Separator />
             </div>
-            <img :src="subtypeImage" alt="Subtype Badge" class="max-w-[6vh] mt-2" />
+            <img
+              :src="subtypeImage"
+              alt="Subtype Badge"
+              class="max-w-[6vh] mt-2"
+            />
           </figure>
 
           <div class="pt-2">
@@ -135,8 +174,11 @@ const subtypeImage = computed(() => {
           <!-- Adicionar ao Carrinho -->
           <DialogFooter class="mt-auto w-full flex justify-center">
             <div class="pt-2 w-full flex justify-end">
-              <Button type="button" @click=""
-                class="mx-auto w-full p-[2.5vh] text-[2.5vh] bg-blue-600 text-white border border-blue-600 hover:bg-transparent hover:text-blue-600 transition-all duration-300 ease-in-out">
+              <Button
+                type="button"
+                @click="addToCart(card)"
+                class="mx-auto w-full p-[2.5vh] text-[2.5vh] bg-blue-600 text-white border border-blue-600 hover:bg-transparent hover:text-blue-600 transition-all duration-300 ease-in-out"
+              >
                 Adicionar ao carrinho
               </Button>
             </div>
@@ -146,5 +188,3 @@ const subtypeImage = computed(() => {
     </DialogContent>
   </Dialog>
 </template>
-
-<style></style>

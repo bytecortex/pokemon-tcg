@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { onMounted, watch } from "vue";
 import { useCards } from "@/composables/useCards";
-import { ref } from "vue";
 import CardDialog from "@/components/CardDialog.vue";
 
 const route = useRoute();

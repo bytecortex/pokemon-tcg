@@ -24,5 +24,3 @@ class AddToCartRequest(BaseModel):
     card_id: str
 
 
-class UpdateQuantityRequest(BaseModel):
-    quantity: int

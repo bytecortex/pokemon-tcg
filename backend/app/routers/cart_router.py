@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Path, Body
 from typing import List
 from app.schemas.cart_schema import CartItemSchema, AddToCartRequest
 from app.services.cart_service import CartService
@@ -28,19 +28,16 @@ def get_cart_items(user_id: int):
     try:
         return cart_service.list_cart_items(user_id)
     except Exception as e:
-        print(f"Erro no test-cart: {e}")
-        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str("e"))
     
 
-@router.put("/items/{user_id}/{card_id}")
-def update_quantity(user_id: int, card_id: str):
+@router.put("/update_quantity/{item_id}")
+def update_cart_item_quantity(item_id: int, quantity: int = Body(..., embed=True)):
     """
-    Adiciona nova quantidade de um item ao carrinho.
+    Atualiza a quantidade de um item no carrinho.
     """
     try:
-        return cart_service.add_item_to_cart(user_id, card_id)
+        cart_service.update_cart_item_quantity(item_id, quantity)
+        return {"message": "Quantidade atualizada com sucesso"}
     except Exception as e:
-        print(f"Erro no test-cart: {e}")
-        traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str("e"))
+        raise HTTPException(status_code=500, detail=str(e))

@@ -103,3 +103,22 @@ class CartRepository:
         finally:
             cursor.close()
             db.close()
+
+    def update_cart_item_quantity(self, item_id: int, quantity: int) -> None:
+        db = Database().connect()
+        cursor = db.cursor()
+
+        try:
+            if quantity < 1:
+                # Remove item se a quantidade for 0
+                cursor.execute("DELETE FROM cart_items WHERE id = %s", (item_id,))
+            else:
+                cursor.execute("UPDATE cart_items SET quantity = %s WHERE id = %s", (quantity, item_id))
+
+            db.commit()
+        except Error as e:
+            db.rollback()
+            raise Exception(f"Erro ao atualizar quantidade do item: {str(e)}")
+        finally:
+            cursor.close()
+            db.close()

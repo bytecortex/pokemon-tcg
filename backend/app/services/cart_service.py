@@ -17,10 +17,9 @@ class CartService:
             updated_at=None
         )
 
-    def add_item_to_cart(self, user_id: int, card_id: str) -> None:
-        self.repository.add_card_to_cart(user_id, card_id)
-
     def list_cart_items(self, user_id: int) -> List[CartItemSchema]:
         items = self.repository.list_cart_items(user_id)
         return [CartItemSchema(**item) for item in items]
 
+    def update_cart_item_quantity(self, item_id: int, quantity: int) -> None:
+        self.repository.update_cart_item_quantity(item_id, quantity)

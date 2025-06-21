@@ -57,18 +57,14 @@ const userId = userStore.user?.id;
 
 async function addToCart(card: any) {
   try {
-    const response = await api.post("/cart/add", {
+    await api.post("/cart/add", {
       user_id: userId,
       card_id: card.id,
     });
 
-    // if (!response.ok) {
-    //   throw new Error("Erro ao adicionar ao carrinho");
-    // }
-
     alert(`"${card.name}" foi adicionado ao carrinho!`);
-  } catch (error) {
-    alert("Erro ao adicionar ao carrinho: " + error);
+  } catch (error: any) {
+    alert("Erro ao adicionar ao carrinho: " + (error?.message || "Erro desconhecido"));
   }
 }
 </script>

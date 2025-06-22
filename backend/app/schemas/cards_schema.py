@@ -24,3 +24,7 @@ class CardInOrder(BaseModel):
     name: str
     image_url_small: str
     quantity: int
+
+class CardUpdateRequest(BaseModel):
+    stock: int
+    price: float

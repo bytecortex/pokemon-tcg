@@ -36,3 +36,36 @@ class CardRepository:
         finally:
             cursor.close()
             db.close()
+
+    def get_card_by_id(self, card_id: str) -> Optional[dict]:
+        db = Database().connect()
+        cursor = db.cursor(dictionary=True)
+        try:
+            cursor.execute("""
+                SELECT id, supertype, subtypes, name, image_url_small AS small, image_url_large AS large,
+                    series, rarity, price, stock, hp, types, flavor_text
+                FROM cards
+                WHERE id = %s
+            """, (card_id,))
+            return cursor.fetchone()
+        except Error as e:
+            raise Exception(f"Erro ao buscar card por ID: {str(e)}")
+        finally:
+            cursor.close()
+            db.close()
+
+    def update_card(self, card_id: str, stock: int, price: float):
+        db = Database().connect()
+        cursor = db.cursor()
+        try:
+            cursor.execute("""
+                UPDATE cards
+                SET stock = %s, price = %s
+                WHERE id = %s
+            """, (stock, price, card_id))
+            db.commit()
+        except Error as e:
+            raise Exception(f"Erro ao atualizar card: {str(e)}")
+        finally:
+            cursor.close()
+            db.close()

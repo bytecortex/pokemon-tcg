@@ -3,6 +3,9 @@ import Home from '@/pages/HomePage.vue'
 import CardsPage from '@/pages/CardsPage.vue'
 import OrdersPage from '@/pages/OrdersPage.vue'
 import CartPage from '@/pages/CartPage.vue'
+import AdminPage from '@/pages/admin/DashboardPage.vue'
+import ManageCardsPage from '@/pages/admin/ManageCardsPage.vue'
+import ManageUsersPage from '@/pages/admin/ManageUsersPage.vue'
 import { useUserStore } from '@/server/userStore';
 
 const routes = [
@@ -28,7 +31,17 @@ const routes = [
   },
   {
     path: "/admin",
-    component: () => import('@/pages/admin/AdminPanel.vue'),
+    component: AdminPage,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: "/admin/cards",
+    component: ManageCardsPage,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: "/admin/users",
+    component: ManageUsersPage,
     meta: { requiresAdmin: true },
   }
 ]
@@ -39,7 +52,7 @@ const router = createRouter({
 })
 
 // Verifica se o usuário é admin quando a rota requer acesso de admin
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const userStore = useUserStore();
 
   if (to.meta.requiresAdmin && userStore.user?.role !== 'admin') {

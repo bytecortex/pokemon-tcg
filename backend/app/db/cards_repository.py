@@ -3,14 +3,25 @@ from app.db.connection import Database
 from mysql.connector import Error
 
 class CardRepository:
-    def get_cards(self, name: Optional[str] = None, types: Optional[str] = None, limit: int = 30, in_stock_only: bool = False) -> List[dict]:
+    def get_cards(self, name: Optional[str] = None, types: Optional[str] = None, limit: int = 30, in_stock_only: bool = False, hyper_rare: bool = False) -> List[dict]:
         db = Database().connect()
         cursor = db.cursor(dictionary=True)
         try:
-            query = """
-                SELECT id, supertype, subtypes ,name, image_url_small AS small, image_url_large AS large, series, rarity, price, stock, hp, types, flavor_text
-                FROM {}
-            """.format("vw_cards_in_stock" if in_stock_only else "cards")
+            if hyper_rare is True:
+                query = """
+                    SELECT id, supertype, subtypes ,name, image_url_small AS small, image_url_large AS large, series, rarity, price, stock, hp, types, flavor_text
+                    FROM vw_rarest_cards
+                """
+            elif in_stock_only is True:
+                query = """
+                    SELECT id, supertype, subtypes ,name, image_url_small AS small, image_url_large AS large, series, rarity, price, stock, hp, types, flavor_text
+                    FROM vw_cards_in_stock
+                """
+            else:
+                query = """
+                    SELECT id, supertype, subtypes ,name, image_url_small AS small, image_url_large AS large, series, rarity, price, stock, hp, types, flavor_text
+                    FROM cards
+                """
 
             filters = []
             params = []

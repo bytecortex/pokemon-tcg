@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { SlidersHorizontal, ArrowDownUp } from 'lucide-vue-next';
+import { ref, watch, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { SlidersHorizontal, ArrowDownUp } from "lucide-vue-next";
 import {
   Sheet,
   SheetClose,
@@ -13,19 +13,28 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
+} from "@/components/ui/sheet";
 
 const types = [
-  'Colorless', 'Darkness', 'Dragon', 'Fairy', 'Fighting', 'Fire',
-  'Grass', 'Lightning', 'Metal', 'Psychic', 'Water',
+  "Colorless",
+  "Darkness",
+  "Dragon",
+  "Fairy",
+  "Fighting",
+  "Fire",
+  "Grass",
+  "Lightning",
+  "Metal",
+  "Psychic",
+  "Water",
 ];
 
 const selectedType = ref<string | null>(null);
 const inStockOnly = ref(false);
+const hyperRare = ref(false);
 
 const router = useRouter();
 const route = useRoute();
-
 
 function syncFiltersFromURL() {
   const t = route.query.types as string | undefined;
@@ -35,7 +44,8 @@ function syncFiltersFromURL() {
     selectedType.value = null;
   }
 
-  inStockOnly.value = route.query.in_stock_only === 'true';
+  // inStockOnly.value = route.query.in_stock_only === "true";
+  hyperRare.value = route.query.hyper_rare === "true";
 }
 
 function applyFilters() {
@@ -47,16 +57,23 @@ function applyFilters() {
     delete query.types;
   }
 
+  if (hyperRare.value) {
+    query.hyper_rare = "true";
+  } else {
+    delete query.hyper_rare;
+  }
+
   query.in_stock_only = String(inStockOnly.value);
 
-  router.push({ path: '/cards', query });
+  router.push({ path: "/cards", query });
 }
 
 function clearFilters() {
   selectedType.value = null;
   inStockOnly.value = false;
-  const { types, ...rest } = route.query;
-  router.push({ path: '/cards', query: rest });
+  hyperRare.value = false;
+  const { types, in_stock_only, hyper_rare, ...rest } = route.query;
+  router.push({ path: "/cards", query: rest });
 }
 
 onMounted(syncFiltersFromURL);
@@ -74,12 +91,12 @@ function onCheckboxChange(e: Event, type: string) {
   const target = e.target as HTMLInputElement;
   toggleType(type, target.checked);
 }
-
 </script>
 
 <template>
   <div
-    class="flex justify-start items-center w-full h-16 pt-3 px-4 bg-white dark:bg-black text-gray-800 dark:text-gray-300 shadow-md space-x-4">
+    class="flex justify-start items-center w-full h-16 pt-3 px-4 bg-white dark:bg-black text-gray-800 dark:text-gray-300 shadow-md space-x-4"
+  >
     <Sheet>
       <SheetTrigger as-child>
         <Button variant="outline">
@@ -91,39 +108,87 @@ function onCheckboxChange(e: Event, type: string) {
       <SheetContent side="left" class="flex flex-col h-full">
         <SheetHeader class="shrink-0">
           <SheetTitle class="text-xl">Filters</SheetTitle>
-          <SheetDescription>Use the filters below to customize the displayed cards.</SheetDescription>
+          <SheetDescription>
+            Use the filters below to customize the displayed cards.
+          </SheetDescription>
         </SheetHeader>
 
         <div class="overflow-y-auto px-4 py-2 space-y-2 flex-1">
           <Separator />
-          <label class="font-semibold text-lg">Type</label>
+          <Label class="font-semibold text-lg">Type</Label>
 
-          <div v-for="type in types" :key="type" class="flex items-center space-x-2 pt-2">
-            <input type="checkbox" :id="`type-${type}`" :value="type" :checked="selectedType === type"
-              @change="e => onCheckboxChange(e, type)" class="cursor-pointer" />
-            <label :for="`type-${type}`" class="text-md font-medium leading-none cursor-pointer">
+          <div
+            v-for="type in types"
+            :key="type"
+            class="flex items-center space-x-2 pt-2"
+          >
+            <input
+              type="radio"
+              :id="`type-${type}`"
+              :value="type"
+              :checked="selectedType === type"
+              @change="(e) => onCheckboxChange(e, type)"
+              class="cursor-pointer"
+            />
+            <label
+              :for="`type-${type}`"
+              class="text-md font-medium leading-none cursor-pointer"
+            >
               {{ type }}
             </label>
           </div>
           <!-- Filtro por estoque -->
           <Separator class="mt-4" />
+          <Label class="font-semibold text-lg">Stock</Label>
+
           <div class="flex items-center space-x-2 pt-4">
-            <input id="in-stock-only" type="checkbox" v-model="inStockOnly" class="cursor-pointer" />
-            <label for="in-stock-only" class="text-md font-medium leading-none cursor-pointer">
-              in Stock
-            </label>
+            <input
+              id="in-stock-only"
+              type="checkbox"
+              v-model="inStockOnly"
+              class="cursor-pointer"
+            />
+            <Label
+              for="in-stock-only"
+              class="text-md font-medium leading-none cursor-pointer"
+            >
+              In Stock
+            </Label>
+          </div>
+          <!-- Filtro por raridade -->
+          <Separator class="mt-4" />
+          <label class="font-semibold text-lg">Rarity</label>
+
+          <div class="flex items-center space-x-2 pt-4">
+            <input
+              id="hyper-rare"
+              type="checkbox"
+              v-model="hyperRare"
+              class="cursor-pointer"
+            />
+            <Label
+              for="hyper-rare"
+              class="text-md font-medium leading-none cursor-pointer"
+            >
+              Hyper Rare
+            </Label>
           </div>
         </div>
 
-        <SheetFooter class="shrink-0 px-4 pb-4 space-x-2">
+        <SheetFooter>
           <SheetClose as-child>
             <Button class="text-md" type="button" @click="applyFilters">
               Apply filter
             </Button>
           </SheetClose>
 
-          <SheetClose as-child class="shrink-0 px-4 pb-4 space-x-2">
-            <Button class="text-md" type="button" variant="outline" @click="clearFilters">
+          <SheetClose as-child>
+            <Button
+              class="text-md"
+              type="button"
+              variant="outline"
+              @click="clearFilters"
+            >
               Clear
             </Button>
           </SheetClose>

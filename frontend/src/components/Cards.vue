@@ -20,16 +20,18 @@ onMounted(() => {
     name: route.query.name as string,
     types: route.query.types as string,
     in_stock_only: route.query.in_stock_only === 'true',
+    hyper_rare: route.query.hyper_rare === 'true',
   });
 });
 
 watch(
-  () => [route.query.name, route.query.types, route.query.in_stock_only],
+  () => [route.query.name, route.query.types, route.query.in_stock_only, route.query.hyper_rare],
   () => {
     fetchCards({
       name: route.query.name as string,
       types: route.query.types as string,
       in_stock_only: route.query.in_stock_only === 'true',
+      hyper_rare: route.query.hyper_rare === 'true'
     });
   }
 );

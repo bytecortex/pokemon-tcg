@@ -6,8 +6,8 @@ class CardService:
     def __init__(self):
         self.repository = CardRepository()
 
-    def list_cards(self, name: Optional[str], types: Optional[str], limit: int, in_stock_only: bool) -> List[CardSchema]:
-        results = self.repository.get_cards(name, types, limit, in_stock_only)
+    def list_cards(self, name: Optional[str], types: Optional[str], limit: int, in_stock_only: bool, hyper_rare: bool) -> List[CardSchema]:
+        results = self.repository.get_cards(name, types, limit, in_stock_only, hyper_rare)
         return [
             CardSchema(
                 id=row["id"],

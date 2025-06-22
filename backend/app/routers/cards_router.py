@@ -11,9 +11,10 @@ def get_cards(
     name: Optional[str] = Query(None, description="Nome do card"),
     types: Optional[str] = Query(None, description="Tipo do card"),
     limit: int = Query(30, ge=1, le=100, description="Limite de resultados"),
-    in_stock_only: bool = Query(False, description="Filtrar somente cartas com estoque")
+    in_stock_only: bool = Query(False, description="Filtrar somente cartas com estoque"),
+    hyper_rare: bool = Query(False, description="Filtrar somente cartas raras")
 ):
-    return card_service.list_cards(name=name, types=types, limit=limit, in_stock_only=in_stock_only)
+    return card_service.list_cards(name=name, types=types, limit=limit, in_stock_only=in_stock_only, hyper_rare=hyper_rare)
 
 @router.get("/{card_id}", response_model=CardSchema)
 def get_card_by_id(card_id: str = Path(..., description="ID da carta")):

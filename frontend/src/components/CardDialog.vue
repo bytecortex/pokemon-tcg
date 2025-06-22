@@ -36,7 +36,7 @@ const validTypes = [
   "water",
 ];
 
-const validSubtypes = ["ex", "gx", "vmax"];
+const validSubtypes = ["ex", "gx", "vmax", "v", "break"];
 
 const props = defineProps<{
   modelValue: boolean;
@@ -131,7 +131,7 @@ async function addToCart(card: any) {
               <dd class="ml-2">{{ card.rarity }}</dd>
             </div>
             <div v-if="card.types" class="flex">
-              <dt class="font-semibold">Tipo:</dt>
+              <dt class="font-semibold">Type:</dt>
               <dd class="ml-2">{{ card.types }}</dd>
             </div>
             <div v-if="card.hp" class="flex">

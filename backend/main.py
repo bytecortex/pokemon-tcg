@@ -4,6 +4,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.routers import auth_router, cards_router, cart_router, admin_router, order_router
+from app.routers import dashboard_router
 
 app = FastAPI()
 
@@ -29,3 +30,4 @@ app.include_router(cart_router.router)
 app.include_router(auth_router.router)
 app.include_router(admin_router.router)
 app.include_router(order_router.router)
+app.include_router(dashboard_router.router)

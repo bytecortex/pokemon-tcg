@@ -45,3 +45,20 @@ class OrderRepository:
                     db.close()
                 except:
                     pass
+
+    def get_total_orders_and_revenue(self) -> dict:
+        db = Database().connect()
+        cursor = db.cursor(dictionary=True)
+        try:
+            cursor.execute("""
+                SELECT COUNT(*) AS total_orders, COALESCE(SUM(total_price), 0) AS total_revenue
+                FROM orders
+            """)
+            result = cursor.fetchone()
+            return {
+                "total_orders": result["total_orders"],
+                "total_revenue": float(result["total_revenue"]),
+            }
+        finally:
+            cursor.close()
+            db.close()

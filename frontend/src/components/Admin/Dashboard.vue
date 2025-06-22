@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { Users, ShoppingCart, DollarSign } from "lucide-vue-next";
+import api from "@/api";
 
 const totalUsers = ref(0);
 const totalOrders = ref(0);
 const totalRevenue = ref(0);
 
-function loadDashboardData() {
-  totalUsers.value = 1234;
-  totalOrders.value = 567;
-  totalRevenue.value = 89012.34;
+async function loadDashboardData() {
+  try {
+    const response = await api.get("/dashboard/");
+    const data = response.data;
+    totalUsers.value = data.totalUsers;
+    totalOrders.value = data.totalOrders;
+    totalRevenue.value = data.totalRevenue;
+  } catch (error) {
+    console.error("Erro ao carregar dados do dashboard:", error);
+  }
 }
 
 onMounted(() => {

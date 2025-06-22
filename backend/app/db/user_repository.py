@@ -34,3 +34,14 @@ class UserRepository:
         finally:
             cursor.close()
             conn.close()
+
+    def get_total_users(self) -> int:
+        conn = self.db.connect()
+        cursor = conn.cursor()
+        try:
+            cursor.execute("SELECT COUNT(*) FROM users")
+            (total,) = cursor.fetchone()
+            return total
+        finally:
+            cursor.close()
+            conn.close()

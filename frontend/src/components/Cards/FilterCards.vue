@@ -144,7 +144,7 @@ function onCheckboxChange(e: Event, type: string) {
           <div class="flex items-center space-x-2 pt-4">
             <input
               id="in-stock-only"
-              type="checkbox"
+              type="radio"
               v-model="inStockOnly"
               class="cursor-pointer"
             />
@@ -162,7 +162,7 @@ function onCheckboxChange(e: Event, type: string) {
           <div class="flex items-center space-x-2 pt-4">
             <input
               id="hyper-rare"
-              type="checkbox"
+              type="radio"
               v-model="hyperRare"
               class="cursor-pointer"
             />

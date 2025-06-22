@@ -8,7 +8,7 @@ class UserRepository:
         conn = self.db.connect()
         cursor = conn.cursor()
         try:
-            cursor.execute("SELECT id, name, password FROM users WHERE email = %s", (email,))
+            cursor.execute("SELECT id, name, password, role FROM users WHERE email = %s", (email,))
             return cursor.fetchone()
         finally:
             cursor.close()

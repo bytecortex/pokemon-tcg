@@ -38,9 +38,9 @@ async function handleLogin() {
       password: password.value,
     });
 
-    alert(response.data.message);
+    alert(response.data.message || "Login successful");
 
-    userStore.setUser(response.data.user);
+    userStore.setUser(response.data.user, response.data.access_token);
 
     email.value = "";
     password.value = "";
@@ -67,6 +67,7 @@ async function handleLogin() {
     loading.value = false;
   }
 }
+
 </script>
 
 <template>

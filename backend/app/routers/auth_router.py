@@ -7,8 +7,8 @@ auth_service = AuthService()
 
 @router.post("/login")
 def login(data: LoginRequest):
-    user = auth_service.login(data.email, data.password)
-    return {"message": "Login successful", "user": user}
+    result = auth_service.login(data.email, data.password)
+    return result
 
 @router.post("/register")
 def register(data: RegisterRequest):

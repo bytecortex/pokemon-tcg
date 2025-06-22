@@ -57,3 +57,31 @@ class UserRepository:
         finally:
             cursor.close()
             conn.close()
+
+    def get_users_with_orders_by_name(self, name: str):
+        conn = self.db.connect()
+        cursor = conn.cursor()
+        try:
+            # Ajuste a consulta para trazer apenas os campos necessários
+            cursor.execute("CALL get_user_by_name(%s)", (name,))
+            rows = cursor.fetchall()
+            
+            # Transformar a tupla em um dicionário
+            users = [{
+                "id": row[0],
+                "name": row[1],
+                "email": row[2],
+                "total_orders": row[4]  # Total de pedidos (ajustado para corresponder à sua consulta)
+            } for row in rows]
+            
+            return users
+        except Exception as e:
+            print(f"Erro ao executar a query: {e}")
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                try:
+                    conn.close() 
+                except Exception as e:
+                    print(f"Erro ao fechar a conexão: {e}")

@@ -32,8 +32,8 @@ watch(darkMode, (newVal) => {
   }
 });
 
-function isActive(path: string) {
-  return route.path === path
+function isActive(paths: string[]) {
+  return paths.includes(route.path)
     ? "bg-blue-600 text-white"
     : "hover:bg-gray-100 dark:hover:bg-gray-800";
 }
@@ -57,21 +57,21 @@ function navigate(path: string) {
 
       <button class="flex items-center space-x-3 px-4 py-2 rounded transition font-medium cursor-pointer
                border border-transparent hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-gray-800"
-        :class="isActive('/admin')" @click="navigate('/admin')">
+        :class="isActive(['/admin'])" @click="navigate('/admin')">
         <LayoutDashboard class="w-5 h-5" />
         <span>Dashboard</span>
       </button>
 
       <button class="flex items-center space-x-3 px-4 py-2 rounded transition font-medium cursor-pointer
                border border-transparent hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-gray-800"
-        :class="isActive('/admin/users')" @click="navigate('/admin/users')">
+        :class="isActive(['/admin/users', '/admin/usersOrders'])" @click="navigate('/admin/users')">
         <Users class="w-5 h-5" />
         <span>Users</span>
       </button>
 
       <button class="flex items-center space-x-3 px-4 py-2 rounded transition font-medium cursor-pointer
    border border-transparent hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-gray-800"
-        :class="isActive('/admin/cards')" @click="navigate('/admin/cards')">
+        :class="isActive(['/admin/cards'])" @click="navigate('/admin/cards')">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <rect x="3" y="2" width="18" height="20" rx="3" ry="3" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" />

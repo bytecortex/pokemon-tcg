@@ -32,6 +32,12 @@ onMounted(() => {
   <div class="p-6 space-y-6">
     <h1 class="text-2xl font-semibold text-gray-800 dark:text-white">User List</h1>
 
+    <!-- Ver Pedidos -->
+    <router-link to="/admin/usersOrders"
+      class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded shadow">
+      Total Orders 
+    </router-link>
+
     <div v-if="error" class="text-red-600 dark:text-red-400">
       {{ error }}
     </div>

@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, EmailStr
 
 class LoginRequest(BaseModel):
@@ -14,3 +15,10 @@ class UserResponse(BaseModel):
     name: str
     email: EmailStr
     role: str
+
+class UserWithOrdersResponse(BaseModel):
+    id: int
+    name: str
+    email: EmailStr
+    total_orders: int
+    

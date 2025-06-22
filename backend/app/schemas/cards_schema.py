@@ -18,3 +18,9 @@ class CardSchema(BaseModel):
     hp: int
     types: str
     flavor_text: Optional[str]
+
+class CardInOrder(BaseModel):
+    card_id: str
+    name: str
+    image_url_small: str
+    quantity: int

@@ -24,3 +24,24 @@ class OrderRepository:
                     db.close()
                 except:
                     pass
+
+    def get_cards_by_order_id(self, order_id: int) -> List[dict]:
+        try:
+            db = Database().connect()
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("CALL GetCardsByOrderId(%s)", (order_id,))
+            results = cursor.fetchall()
+            return results
+        except Error as e:
+            raise Exception(f"Erro ao buscar cartas do pedido: {str(e)}")
+        finally:
+            if cursor:
+                try:
+                    cursor.close()
+                except:
+                    pass
+            if db:
+                try:
+                    db.close()
+                except:
+                    pass

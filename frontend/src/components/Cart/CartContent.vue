@@ -15,15 +15,14 @@ import { useUserStore } from "@/server/userStore";
 import type { CartItems } from "@/interfaces/carts";
 import { Separator } from "@/components/ui/separator";
 
-
 const userStore = useUserStore();
 const userId = userStore.user?.id;
 
 const cartItems = ref<CartItems[]>([]);
 const isLoading = ref(true);
 
-// Subtotal computado dinamicamente
-const subtotal = computed(() =>
+// Total computado dinamicamente
+const total = computed(() =>
   cartItems.value.reduce((total, item) => total + item.price * item.quantity, 0)
 );
 
@@ -127,9 +126,12 @@ const checkout = async () => {
                   </div>
                 </dl>
 
-                <div class="flex items-center">
+                <div class="flex items-center flex-col justify-center text-right">
+                  <Label class="font-semibold text-sm text-gray-500">
+                    $ {{ cartItem.price.toFixed(2) }} ea
+                  </Label>
                   <Label class="font-semibold text-xl">
-                    $ {{ cartItem.price.toFixed(2) }}
+                    $ {{ (cartItem.price * cartItem.quantity).toFixed(2) }}
                   </Label>
                 </div>
               </div>
@@ -139,20 +141,20 @@ const checkout = async () => {
       </CardContent>
     </Card>
 
-    <!-- Coluna de subtotal -->
+    <!-- Coluna de Total -->
     <div>
       <Card class="w-full lg:w-110">
         <CardContent>
           <CardTitle class="text-2xl font-semibold">
-            Subtotal ({{ cartItems.length }} produtos):
+            Total ({{ cartItems.length }} items):
           </CardTitle>
-          <p class="text-2xl font-semibold">$ {{ subtotal.toFixed(2) }}</p>
+          <p class="text-2xl font-semibold">$ {{ total.toFixed(2) }}</p>
         </CardContent>
         <CardFooter>
           <div class="pt-2 w-full flex justify-end">
             <Button type="button" :disabled="isProcessingOrder" @click="checkout"
               class="rounded-xl text-lg h-12 w-full bg-blue-600 text-white border border-blue-600 hover:bg-transparent hover:text-blue-600 transition-all duration-300 ease-in-out">
-              {{ isProcessingOrder ? 'Processando...' : 'Fechar pedido' }}
+              {{ isProcessingOrder ? 'Processing...' : 'Complete Order' }}
             </Button>
           </div>
         </CardFooter>

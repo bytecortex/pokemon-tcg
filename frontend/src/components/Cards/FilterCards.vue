@@ -44,6 +44,8 @@ function syncFiltersFromURL() {
     selectedType.value = null;
   }
 
+  // Verifique e defina inStockOnly e hyperRare a partir da URL
+  inStockOnly.value = route.query.in_stock_only === "true";
   hyperRare.value = route.query.hyper_rare === "true";
 }
 
@@ -75,8 +77,13 @@ function clearFilters() {
   router.push({ path: "/cards", query: rest });
 }
 
-onMounted(syncFiltersFromURL);
+onMounted(() => {
+  syncFiltersFromURL();
+});
+
 watch(() => route.query.types, syncFiltersFromURL);
+watch(() => route.query.in_stock_only, syncFiltersFromURL);
+watch(() => route.query.hyper_rare, syncFiltersFromURL);
 
 function toggleType(type: string, checked: boolean) {
   if (checked) {

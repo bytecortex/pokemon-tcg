@@ -34,15 +34,15 @@ watch(darkMode, (newVal) => {
 });
 
 // Indexamento dos botões
-type button = "Cards" | "Events" | "Cart" | "Home";
+type button = "Cards" | "Orders" | "Cart" | "Home";
 
 function handleClick(origin: button) {
   switch (origin) {
     case "Cards":
       router.push("/cards");
       break;
-    case "Events":
-      router.push("/events");
+    case "Orders":
+      router.push("/orders");
       break;
     case "Cart":
       router.push("/cart");
@@ -163,11 +163,11 @@ const userStore = useUserStore();
       Cart
     </Button>
     <Button
-      @click="handleClick('Events')"
+      @click="handleClick('Orders')"
       class="h-8 flex rounded-xl items-center hover:text-primary transition font-semibold"
       variant="ghost"
     >
-      Events
+      Orders
     </Button>
   </div>
 </template>

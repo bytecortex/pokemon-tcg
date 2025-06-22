@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/pages/HomePage.vue'
 import CardsPage from '@/pages/CardsPage.vue'
-import EventsPage from '@/pages/EventsPage.vue'
+import OrdersPage from '@/pages/OrdersPage.vue'
 import CartPage from '@/pages/CartPage.vue'
 import { useUserStore } from '@/server/userStore';
 
@@ -17,9 +17,9 @@ const routes = [
     component: CardsPage
   },
   {
-    path: '/events',
-    name: 'Events',
-    component: EventsPage
+    path: '/orders',
+    name: 'Orders',
+    component: OrdersPage
   },
   {
     path: '/cart',

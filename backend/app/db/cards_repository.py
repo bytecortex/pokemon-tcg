@@ -80,3 +80,19 @@ class CardRepository:
         finally:
             cursor.close()
             db.close()
+
+    def get_top_selling_cards(self) -> List[dict]:
+        db = Database().connect()
+        cursor = db.cursor(dictionary=True)
+        try:
+            query = """
+                SELECT card_id, card_name, total_sold, price, total_sales
+                FROM vw_top_selling_cards
+            """
+            cursor.execute(query)
+            return cursor.fetchall()
+        except Error as e:
+            raise Exception(f"Erro ao buscar top selling cards: {str(e)}")
+        finally:
+            cursor.close()
+            db.close()

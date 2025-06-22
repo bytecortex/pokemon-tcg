@@ -7,6 +7,7 @@ import AdminPage from '@/pages/admin/DashboardPage.vue'
 import ManageCardsPage from '@/pages/admin/ManageCardsPage.vue'
 import ManageUsersPage from '@/pages/admin/ManageUsersPage.vue'
 import UsersOrdersPage from '@/pages/admin/UsersOrdersPage.vue'
+import CardsTopSellersPage from '@/pages/admin/CardsTopSellersPage.vue'
 import { useUserStore } from '@/server/userStore';
 
 const routes = [
@@ -45,9 +46,14 @@ const routes = [
     component: ManageUsersPage,
     meta: { requiresAdmin: true },
   },
-    {
+  {
     path: "/admin/usersOrders",
     component: UsersOrdersPage,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: "/admin/cardsTopSellers",
+    component: CardsTopSellersPage,
     meta: { requiresAdmin: true },
   }
 ]

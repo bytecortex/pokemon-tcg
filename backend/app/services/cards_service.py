@@ -49,3 +49,8 @@ class CardService:
 
     def update_card(self, card_id: str, update_data: CardUpdateRequest):
         return self.repository.update_card(card_id, update_data.stock, update_data.price)
+    
+
+    def get_top_selling_cards(self) -> List[dict]:
+        results = self.repository.get_top_selling_cards()
+        return results

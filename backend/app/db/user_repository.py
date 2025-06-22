@@ -45,3 +45,15 @@ class UserRepository:
         finally:
             cursor.close()
             conn.close()
+
+    def get_all_users(self):
+        conn = self.db.connect()
+        cursor = conn.cursor()
+        try:
+            cursor.execute("SELECT id, name, email, role FROM users")
+            rows = cursor.fetchall()
+            users = [{"id": row[0], "name": row[1], "email": row[2], "role": row[3]} for row in rows]
+            return users
+        finally:
+            cursor.close()
+            conn.close()

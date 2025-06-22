@@ -44,7 +44,6 @@ function syncFiltersFromURL() {
     selectedType.value = null;
   }
 
-  // inStockOnly.value = route.query.in_stock_only === "true";
   hyperRare.value = route.query.hyper_rare === "true";
 }
 
@@ -90,6 +89,17 @@ function toggleType(type: string, checked: boolean) {
 function onCheckboxChange(e: Event, type: string) {
   const target = e.target as HTMLInputElement;
   toggleType(type, target.checked);
+}
+
+// Função para garantir que apenas um filtro (inStockOnly ou hyperRare) seja selecionado
+function toggleStockAndRarity(selected: 'stock' | 'rarity') {
+  if (selected === 'stock') {
+    inStockOnly.value = true;
+    hyperRare.value = false;
+  } else if (selected === 'rarity') {
+    hyperRare.value = true;
+    inStockOnly.value = false;
+  }
 }
 </script>
 
@@ -137,6 +147,7 @@ function onCheckboxChange(e: Event, type: string) {
               {{ type }}
             </label>
           </div>
+
           <!-- Filtro por estoque -->
           <Separator class="mt-4" />
           <Label class="font-semibold text-lg">Stock</Label>
@@ -145,8 +156,9 @@ function onCheckboxChange(e: Event, type: string) {
             <input
               id="in-stock-only"
               type="radio"
-              v-model="inStockOnly"
+              :checked="inStockOnly"
               class="cursor-pointer"
+              @change="toggleStockAndRarity('stock')"
             />
             <Label
               for="in-stock-only"
@@ -155,6 +167,7 @@ function onCheckboxChange(e: Event, type: string) {
               In Stock
             </Label>
           </div>
+
           <!-- Filtro por raridade -->
           <Separator class="mt-4" />
           <label class="font-semibold text-lg">Rarity</label>
@@ -163,8 +176,9 @@ function onCheckboxChange(e: Event, type: string) {
             <input
               id="hyper-rare"
               type="radio"
-              v-model="hyperRare"
+              :checked="hyperRare"
               class="cursor-pointer"
+              @change="toggleStockAndRarity('rarity')"
             />
             <Label
               for="hyper-rare"

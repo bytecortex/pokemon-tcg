@@ -1,3 +1,4 @@
+import router from "@/router";
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 
@@ -15,6 +16,7 @@ export const useUserStore = defineStore("user", () => {
   function logout() {
     user.value = null;
     token.value = null;
+    router.push('/');
   }
 
   watch(

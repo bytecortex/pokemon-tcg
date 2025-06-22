@@ -1,10 +1,7 @@
 <script setup lang="ts">
-
+import AdminAside from "@/components/Admin/AsideNav.vue";
 </script>
 
 <template>
-  <div>
-    <h1>Painel Administrativo</h1>
-    <p>Conteúdo restrito a admins</p>
-  </div>
+  <AdminAside />
 </template>

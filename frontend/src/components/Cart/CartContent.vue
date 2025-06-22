@@ -3,10 +3,9 @@ import {
   Card,
   CardContent,
   CardFooter,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Minus, Plus, Trash } from "lucide-vue-next";
+import { Minus, Plus } from "lucide-vue-next";
 import api from "@/api";
 import { ref, onMounted, computed } from "vue";
 import { Button } from "@/components/ui/button/";

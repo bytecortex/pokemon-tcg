@@ -19,15 +19,17 @@ onMounted(() => {
   fetchCards({
     name: route.query.name as string,
     types: route.query.types as string,
+    in_stock_only: route.query.in_stock_only === 'true',
   });
 });
 
 watch(
-  () => [route.query.name, route.query.types],
+  () => [route.query.name, route.query.types, route.query.in_stock_only],
   () => {
     fetchCards({
       name: route.query.name as string,
       types: route.query.types as string,
+      in_stock_only: route.query.in_stock_only === 'true',
     });
   }
 );

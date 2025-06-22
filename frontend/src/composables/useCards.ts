@@ -6,12 +6,15 @@ export function useCards() {
   const cards = ref<Card[]>([]);
   const loading = ref(false);
 
-  const fetchCards = async (query: { name?: string; types?: string }) => {
+  const fetchCards = async (query: { name?: string; types?: string; in_stock_only?: boolean }) => {
     loading.value = true;
     try {
       const params = new URLSearchParams();
       if (query.name) params.append("name", query.name);
       if (query.types) params.append("types", query.types);
+      if (query.in_stock_only !== undefined) {
+        params.append("in_stock_only", String(query.in_stock_only));
+      }
 
       const response = await api.get(`/cards?${params.toString()}`);
       cards.value = response.data;

@@ -161,7 +161,7 @@ async function addToCart(card: any) {
               <dt class="font-semibold">Price:</dt>
               <dd class="ml-2">$ {{ card.price.toFixed(2) }}</dd>
             </div>
-            <div v-if="card.stock" class="flex">
+            <div class="flex">
               <dt class="font-semibold">Stock:</dt>
               <dd class="ml-2">{{ card.stock }}</dd>
             </div>
@@ -175,7 +175,7 @@ async function addToCart(card: any) {
                 @click="addToCart(card)"
                 class="mx-auto w-full p-[2.5vh] text-[2.5vh] bg-blue-600 text-white border border-blue-600 hover:bg-transparent hover:text-blue-600 transition-all duration-300 ease-in-out"
               >
-                Adicionar ao carrinho
+                Add to cart
               </Button>
             </div>
           </DialogFooter>

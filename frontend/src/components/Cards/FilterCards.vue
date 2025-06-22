@@ -21,9 +21,11 @@ const types = [
 ];
 
 const selectedType = ref<string | null>(null);
+const inStockOnly = ref(false);
 
 const router = useRouter();
 const route = useRoute();
+
 
 function syncFiltersFromURL() {
   const t = route.query.types as string | undefined;
@@ -32,6 +34,8 @@ function syncFiltersFromURL() {
   } else {
     selectedType.value = null;
   }
+
+  inStockOnly.value = route.query.in_stock_only === 'true';
 }
 
 function applyFilters() {
@@ -43,12 +47,14 @@ function applyFilters() {
     delete query.types;
   }
 
+  query.in_stock_only = String(inStockOnly.value);
+
   router.push({ path: '/cards', query });
 }
 
 function clearFilters() {
   selectedType.value = null;
-
+  inStockOnly.value = false;
   const { types, ...rest } = route.query;
   router.push({ path: '/cards', query: rest });
 }
@@ -68,6 +74,7 @@ function onCheckboxChange(e: Event, type: string) {
   const target = e.target as HTMLInputElement;
   toggleType(type, target.checked);
 }
+
 </script>
 
 <template>
@@ -96,6 +103,14 @@ function onCheckboxChange(e: Event, type: string) {
               @change="e => onCheckboxChange(e, type)" class="cursor-pointer" />
             <label :for="`type-${type}`" class="text-md font-medium leading-none cursor-pointer">
               {{ type }}
+            </label>
+          </div>
+          <!-- Filtro por estoque -->
+          <Separator class="mt-4" />
+          <div class="flex items-center space-x-2 pt-4">
+            <input id="in-stock-only" type="checkbox" v-model="inStockOnly" class="cursor-pointer" />
+            <label for="in-stock-only" class="text-md font-medium leading-none cursor-pointer">
+              in Stock
             </label>
           </div>
         </div>

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Path, Body
+from fastapi import APIRouter, HTTPException, status, Path, Body
 from typing import List
 from app.schemas.cart_schema import CartItemSchema, AddToCartRequest
 from app.services.cart_service import CartService
@@ -41,3 +41,19 @@ def update_cart_item_quantity(item_id: int, quantity: int = Body(..., embed=True
         return {"message": "Quantidade atualizada com sucesso"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+    
+@router.post("/checkout/{user_id}", status_code=status.HTTP_201_CREATED)
+def checkout(user_id: int):
+    """
+    Finaliza o pedido do carrinho ativo do usuário:
+    - Valida estoque suficiente
+    - Cria pedido
+    - Atualiza estoque
+    - Marca carrinho como completed
+    """
+    try:
+        cart_service.checkout_cart(user_id)
+        return {"message": "Pedido finalizado com sucesso!"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))

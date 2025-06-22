@@ -84,6 +84,7 @@ class CartRepository:
                 """
                 SELECT
                     ci.id AS id,
+                    ci.card_id AS card_id,
                     ci.quantity AS quantity,
                     c.name AS name,
                     c.price AS price,
@@ -119,6 +120,43 @@ class CartRepository:
         except Error as e:
             db.rollback()
             raise Exception(f"Erro ao atualizar quantidade do item: {str(e)}")
+        finally:
+            cursor.close()
+            db.close()
+
+    def get_card_stock(self, card_id: str) -> int:
+        db = Database().connect()
+        cursor = db.cursor()
+        try:
+            cursor.execute("SELECT stock FROM cards WHERE id = %s", (card_id,))
+            result = cursor.fetchone()
+            return result[0] if result else 0
+        finally:
+            cursor.close()
+            db.close()
+
+    def create_order_and_complete_cart(self, cart_id: int, user_id: int, total_price: float) -> None:
+        db = Database().connect()
+        cursor = db.cursor()
+        try:
+            # Criar pedido
+            cursor.execute(
+                "INSERT INTO orders (cart_id, user_id, total_price) VALUES (%s, %s, %s)",
+                (cart_id, user_id, total_price)
+            )
+
+            # Atualizar carrinho para 'completed' (trigger já faz isso)
+            cursor.execute(
+                "UPDATE carts SET status = 'completed' WHERE id = %s",
+                (cart_id,)
+            )
+
+            # Atualizar estoque das cartas no carrinho (trigger também faz isso)
+
+            db.commit()
+        except Exception as e:
+            db.rollback()
+            raise Exception(f"Erro ao finalizar pedido: {str(e)}")
         finally:
             cursor.close()
             db.close()

@@ -15,6 +15,7 @@ import { useUserStore } from "@/server/userStore";
 import type { CartItems } from "@/interfaces/carts";
 import { Separator } from "@/components/ui/separator";
 
+
 const userStore = useUserStore();
 const userId = userStore.user?.id;
 
@@ -66,6 +67,30 @@ const updateQuantity = async (itemId: number, newQuantity: number) => {
     console.error("Erro ao atualizar quantidade:", error);
   }
 };
+
+// CHECKOUT
+const isProcessingOrder = ref(false);
+
+const checkout = async () => {
+  if (cartItems.value.length === 0) {
+    alert("Carrinho vazio.");
+    return;
+  }
+
+  isProcessingOrder.value = true;
+
+  try {
+    await api.post(`/cart/checkout/${userId}`);
+    alert("Pedido finalizado com sucesso!");
+    cartItems.value = []; // limpa o carrinho
+  } catch (error: any) {
+    const detail = error?.response?.data?.detail || "Erro ao finalizar o pedido.";
+    alert(detail);
+  } finally {
+    isProcessingOrder.value = false;
+  }
+};
+// FIM CHECKOUT
 
 </script>
 
@@ -125,9 +150,9 @@ const updateQuantity = async (itemId: number, newQuantity: number) => {
         </CardContent>
         <CardFooter>
           <div class="pt-2 w-full flex justify-end">
-            <Button type="button" @click=""
+            <Button type="button" :disabled="isProcessingOrder" @click="checkout"
               class="rounded-xl text-lg h-12 w-full bg-blue-600 text-white border border-blue-600 hover:bg-transparent hover:text-blue-600 transition-all duration-300 ease-in-out">
-              Fechar pedido
+              {{ isProcessingOrder ? 'Processando...' : 'Fechar pedido' }}
             </Button>
           </div>
         </CardFooter>

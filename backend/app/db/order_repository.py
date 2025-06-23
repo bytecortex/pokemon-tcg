@@ -29,7 +29,7 @@ class OrderRepository:
         try:
             db = Database().connect()
             cursor = db.cursor(dictionary=True)
-            cursor.execute("CALL GetCardsByOrderId(%s)", (order_id,))
+            cursor.execute("CALL get_cards_by_order_id(%s)", (order_id,))
             results = cursor.fetchall()
             return results
         except Error as e:

@@ -71,7 +71,7 @@ async function handleLogin() {
 </script>
 
 <template>
-  <Form>
+  <Form @submit.prevent="handleLogin">
     <Dialog v-model:open="isDialogOpen">
       <div v-if="!userStore.user">
         <DialogTrigger as-child>
@@ -143,7 +143,7 @@ async function handleLogin() {
             <DialogFooter class="pt-2">
               <div class="flex justify-start w-full">
                 <Button
-                  type="button"
+                  type="submit"
                   @click="handleLogin"
                   :disabled="loading"
                   class="cursor-pointer"

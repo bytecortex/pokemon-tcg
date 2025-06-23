@@ -72,7 +72,7 @@ async function handleRegister() {
 </script>
 
 <template>
-  <Form>
+  <Form @submit.prevent="handleRegister">
     <Dialog v-model:open="isDialogOpen">
       <div v-if="!userStore.user">
         <DialogTrigger>
@@ -154,7 +154,7 @@ async function handleRegister() {
             <DialogFooter class="pt-2">
               <div class="w-full flex justify-start">
                 <Button
-                  type="button"
+                  type="submit"
                   @click="handleRegister"
                   class="cursor-pointer"
                 >

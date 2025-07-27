@@ -2,7 +2,7 @@
 
 A simple e-commerce platform for buying and selling Pokémon TCG cards. Built with **Vue.js**, **MySQL**, and **PokeAPI** for real-time card data.
 
-🌐 **Check it out live:** [poqg.live](https://poqg.live)
+<!-- 🌐 **Check it out live:** [poqg.live](https://poqg.live)-->
 
 ## Features 
 
